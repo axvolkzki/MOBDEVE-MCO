@@ -1,33 +1,20 @@
 package com.mobdeve.s14.amelia_delacruz.bookcol
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MainActivity : AppCompatActivity() {
+class FeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_feed)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
-
-        // Find the button by its ID
-        val loginButton: Button = findViewById(R.id.buttonLogin)
-
-        // Set up the click listener for the login button
-        loginButton.setOnClickListener {
-            // Navigate to HomeActivity
-            val intent = Intent(this, FeedActivity::class.java)
-            startActivity(intent)
-            finish() // Optional: Close LoginActivity
         }
     }
 }
