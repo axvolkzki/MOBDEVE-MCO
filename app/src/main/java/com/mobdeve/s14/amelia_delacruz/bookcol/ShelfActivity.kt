@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.ActivityShelfBinding
 
-class ShelfActivity : AppCompatActivity(){
+class ShelfActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityShelfBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,8 +16,9 @@ class ShelfActivity : AppCompatActivity(){
         viewBinding = ActivityShelfBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        viewBinding.rcvBooks.adapter = MyAdapter(DataGenerator.loadData())
+        // Set up the RecyclerView
         viewBinding.rcvBooks.layoutManager = GridLayoutManager(this, 3)
+        viewBinding.rcvBooks.adapter = MyAdapter(DataGenerator.loadData()) // Use MyAdapter here
 
         // Set up the click listener for the add button
         viewBinding.imgbtnCommunity.setOnClickListener {
@@ -28,11 +29,10 @@ class ShelfActivity : AppCompatActivity(){
 
     // Function to go to the FeedActivity
     private fun goToFeedActivity() {
-        val intent = Intent(this, FeedActivity::class.java)
+        val intent = Intent(this, CommunityActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    // Show the fragment for adding a book
-
+    // Show the fragment for adding a book (if needed)
 }
