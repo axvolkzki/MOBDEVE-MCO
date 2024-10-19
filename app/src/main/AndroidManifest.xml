@@ -13,10 +13,10 @@
         android:theme="@style/Theme.Bookcol"
         tools:targetApi="31">
         <activity
-            android:name=".FeedActivity"
-            android:exported="false" />
+            android:name=".BaseActivity"
+            android:exported="false"/>
         <activity
-            android:name=".ShelfActivity"
+            android:name=".FeedActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
