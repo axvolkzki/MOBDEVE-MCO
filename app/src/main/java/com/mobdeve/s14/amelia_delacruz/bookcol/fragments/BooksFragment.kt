@@ -34,14 +34,16 @@ class BooksFragment : Fragment() {
         binding.rcvBooks.layoutManager = GridLayoutManager(requireContext(), 3)
 
         val bookList = DataGenerator.loadData()
-        println("Debug: Book list size = ${bookList.size}")  // Debug line
 
-        val adapter = MyAdapter(bookList)
-        binding.rcvBooks.adapter = adapter
+//        val adapter = MyAdapter(bookList)
+//        binding.rcvBooks.adapter = adapter
+//
+//        binding.rcvBooks.post {
+//            binding.rcvBooks.requestLayout()
+//        }
 
-        binding.rcvBooks.post {
-            binding.rcvBooks.requestLayout()
-        }
+        // When the user clicks on a book, the app will navigate to the BookDetailsActivity
+        binding.rcvBooks.adapter = MyAdapter(bookList)
     }
 
     override fun onDestroyView() {
