@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity() {
         // Set up the click listener for the login button
         loginButton.setOnClickListener {
             // Navigate to HomeActivity
-            val intent = Intent(this, FeedActivity::class.java)
+            val intent = Intent(this, ShelfActivity::class.java)
             startActivity(intent)
-            finish() // Optional: Close LoginActivity
+            finish()
         }
     }
 }
