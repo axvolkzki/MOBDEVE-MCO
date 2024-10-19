@@ -11,9 +11,9 @@
         android:id="@+id/rcvWishlists"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
-        tools:listitem="@layout/item_wishlist_layout" />
+        tools:listitem="@layout/item_wishlist_layout"/>
 
 </FrameLayout>
