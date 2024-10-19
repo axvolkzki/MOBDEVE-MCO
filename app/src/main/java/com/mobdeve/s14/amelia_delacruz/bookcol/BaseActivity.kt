@@ -7,6 +7,7 @@ import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.ActivityBaseBinding
 import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.BooksFragment
 import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.FeedFragment
 import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.WishlistFragment
+import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.ProfileFragment
 
 class BaseActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityBaseBinding
@@ -19,6 +20,7 @@ class BaseActivity : AppCompatActivity() {
         val booksFragment = BooksFragment()
         val feedFragment = FeedFragment()
         val wishlistFragment = WishlistFragment()
+        val profileFragment = ProfileFragment()
         
         makeCurrentFragment(booksFragment)
 
@@ -27,6 +29,7 @@ class BaseActivity : AppCompatActivity() {
                 R.id.nav_shelf -> makeCurrentFragment(booksFragment)
                 R.id.nav_feed -> makeCurrentFragment(feedFragment)
                 R.id.nav_wishlist -> makeCurrentFragment(wishlistFragment)
+                R.id.nav_profile -> makeCurrentFragment(profileFragment)
                 else -> return@setOnNavigationItemSelectedListener false
             }
             true
