@@ -35,13 +35,6 @@ class BooksFragment : Fragment() {
 
         val bookList = DataGenerator.loadData()
 
-//        val adapter = MyAdapter(bookList)
-//        binding.rcvBooks.adapter = adapter
-//
-//        binding.rcvBooks.post {
-//            binding.rcvBooks.requestLayout()
-//        }
-
         // When the user clicks on a book, the app will navigate to the BookDetailsActivity
         binding.rcvBooks.adapter = MyAdapter(bookList)
     }
