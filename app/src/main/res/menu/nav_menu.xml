@@ -8,21 +8,21 @@
     <item
         android:id="@+id/nav_feed"
         android:icon="@drawable/ic_network"
-        android:title="Home" />
+        android:title="Feed" />
 
     <item
         android:id="@+id/nav_add_book"
         android:icon="@drawable/ic_add"
-        android:title="Home" />
+        android:title="Add Book" />
 
     <item
         android:id="@+id/nav_wishlist"
         android:icon="@drawable/ic_wishlist"
-        android:title="Home" />
+        android:title="Wishlist" />
 
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_setting"
-        android:title="Home" />
+        android:title="Profile" />
 
 </menu>
