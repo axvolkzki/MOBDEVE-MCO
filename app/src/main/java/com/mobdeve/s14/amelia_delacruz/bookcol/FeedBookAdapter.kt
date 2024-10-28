@@ -3,13 +3,13 @@ package com.mobdeve.s14.amelia_delacruz.bookcol
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.FeedItemBookLayoutBinding
+import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.ItemFeedBookLayoutBinding
 
 class FeedBookAdapter(private val data: List<BookModel>) : RecyclerView.Adapter<FeedBookAdapter.FeedBookViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedBookViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val viewBinding = FeedItemBookLayoutBinding.inflate(layoutInflater, parent, false)
+        val viewBinding = ItemFeedBookLayoutBinding.inflate(layoutInflater, parent, false)
         return FeedBookViewHolder(viewBinding)
     }
 
@@ -21,7 +21,7 @@ class FeedBookAdapter(private val data: List<BookModel>) : RecyclerView.Adapter<
         return data.size
     }
 
-    class FeedBookViewHolder(private val viewBinding: FeedItemBookLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root) {
+    class FeedBookViewHolder(private val viewBinding: ItemFeedBookLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(book: BookModel) {
             viewBinding.bookTitleTextView.text = book.name
             viewBinding.bookAuthorTextView.text = "by ${book.author}"
