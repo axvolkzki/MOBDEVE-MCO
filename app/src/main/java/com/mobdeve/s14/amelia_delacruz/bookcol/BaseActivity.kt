@@ -23,17 +23,32 @@ class BaseActivity : AppCompatActivity() {
         val addBookFragment = AddBookFragment()
         val wishlistFragment = WishlistFragment()
         val profileFragment = ProfileFragment()
-        val fragmentManager = supportFragmentManager
 
         makeCurrentFragment(booksFragment)
+        viewBinding.txvPageTitle.text = "Books"  // Set initial title
 
         viewBinding.bnvNavbar.setOnNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.nav_shelf -> makeCurrentFragment(booksFragment)
-                R.id.nav_feed -> makeCurrentFragment(feedFragment)
-                R.id.nav_add_book -> makeCurrentFragment(addBookFragment)
-                R.id.nav_wishlist -> makeCurrentFragment(wishlistFragment)
-                R.id.nav_profile -> makeCurrentFragment(profileFragment)
+            when (it.itemId) {
+                R.id.nav_shelf -> {
+                    makeCurrentFragment(booksFragment)
+                    viewBinding.txvPageTitle.text = "Books"
+                }
+                R.id.nav_feed -> {
+                    makeCurrentFragment(feedFragment)
+                    viewBinding.txvPageTitle.text = "Feed"
+                }
+                R.id.nav_add_book -> {
+                    makeCurrentFragment(addBookFragment)
+                    viewBinding.txvPageTitle.text = "Add Book"
+                }
+                R.id.nav_wishlist -> {
+                    makeCurrentFragment(wishlistFragment)
+                    viewBinding.txvPageTitle.text = "Wishlist"
+                }
+                R.id.nav_profile -> {
+                    makeCurrentFragment(profileFragment)
+                    viewBinding.txvPageTitle.text = "Profile"
+                }
                 else -> return@setOnNavigationItemSelectedListener false
             }
             true
