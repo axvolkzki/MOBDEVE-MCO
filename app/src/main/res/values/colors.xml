@@ -2,5 +2,24 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="violet">#FF6A1B9A</color>
+
+    <!-- Light Mode -->
+    <color name="lightPrimary">#E0E7FF</color>
+    <color name="lightSecondary">#1A263D</color>
+    <color name="lightAccent">#FFCA60</color>
+    <color name="lightTextIcons">#152135</color>
+    <color name="lightBackground">#F7F9FC</color>
+    <color name="lightActiveButton">#00A834</color>
+    <color name="lightInactiveButton">#E0E7FF</color>
+    <color name="lightErrorWarning">#E0553B</color>
+
+    <!-- Dark Mode -->
+    <color name="darkPrimary">#121212</color>
+    <color name="darkSecondary">#2A2D34</color>
+    <color name="darkAccent">#F0F0F0</color>
+    <color name="darkTextIcons">#FFFFFF</color>
+    <color name="darkBackground">#1A1A1A</color>
+    <color name="darkActiveButton">#38D366</color>
+    <color name="darkInactiveButton">#121212</color>
+    <color name="darkErrorWarning">#FF5E40</color>
 </resources>

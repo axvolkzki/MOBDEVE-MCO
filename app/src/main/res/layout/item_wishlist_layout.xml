@@ -22,6 +22,7 @@
         android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:maxLines="2"
+        android:textColor="@color/lightTextIcons"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
