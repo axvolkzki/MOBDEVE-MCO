@@ -1,9 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Bookcol" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Light mode colors -->
+        <item name="colorPrimary">@color/lightPrimary</item>
+        <item name="colorSecondary">@color/lightSecondary</item>
+        <item name="colorAccent">@color/lightAccent</item>
+        <item name="colorOnPrimary">@color/lightTextIcons</item>
+        <item name="colorError">@color/lightErrorWarning</item>
+        <item name="colorButtonNormal">@color/lightActiveButton</item>
     </style>
 
+    <!-- Derived Theme -->
     <style name="Theme.Bookcol" parent="Base.Theme.Bookcol" />
 </resources>
