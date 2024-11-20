@@ -16,6 +16,15 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Welcome Back"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightPrimary"/>
+
         <LinearLayout
             android:id="@+id/editTextUsernameLayout"
             android:layout_width="match_parent"
@@ -50,7 +59,6 @@
                 android:inputType="text"
                 android:background="@null" />
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/editTextPasswordLayout"
@@ -102,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="10dp"
-            android:text="Don't have account?" />
+            android:text="Don't have an account?" />
 
         <Button
             android:id="@+id/btnLoginToSignUp"

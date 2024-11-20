@@ -16,6 +16,15 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Create Account"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/lightPrimary"/>
+
         <LinearLayout
             android:id="@+id/editTextUsernameLayout"
             android:layout_width="match_parent"
@@ -50,6 +59,101 @@
                 android:inputType="text"
                 android:background="@null" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/editTextEmailLayout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/rounded_border"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/ic_baseline_mail_outline_24" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp" />
+
+
+            <EditText
+                android:id="@+id/txvSignupInputEmaile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:background="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/editTextPasswordLayout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/rounded_border"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/ic_baseline_key_24" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp" />
+
+
+            <EditText
+                android:id="@+id/txvSignupInputPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:background="@null"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSignUpSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SIGN UP"
+            android:textColor="@color/lightBackground"
+            android:background="@drawable/bg_btn_login" />
+
+        <TextView
+            android:id="@+id/txvSignUpHaveAcc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:text="Have an account?" />
+
+        <Button
+            android:id="@+id/btnSignUpToLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOG IN"
+            android:textColor="@color/lightPrimary"
+            android:background="@drawable/bg_btn_signup" />
     </LinearLayout>
 
 </FrameLayout>
