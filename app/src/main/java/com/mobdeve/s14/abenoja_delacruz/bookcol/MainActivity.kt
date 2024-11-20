@@ -1,6 +1,8 @@
 package com.mobdeve.s14.abenoja_delacruz.bookcol
 
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityMainBinding
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.LoginFragment
@@ -17,6 +19,17 @@ class MainActivity : AppCompatActivity() {
 
         val loginFragment = LoginFragment()
         val signupFragment = SignupFragment()
+
+        // Test crash button for Firebase Crashlytics
+        val crashButton = Button(this)
+        crashButton.text = "Test Crash"
+        crashButton.setOnClickListener {
+            throw RuntimeException("Test Crash") // Force a crash
+        }
+
+        addContentView(crashButton, ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT))
 
 
         // If user is not logged in, show the main activity layout
