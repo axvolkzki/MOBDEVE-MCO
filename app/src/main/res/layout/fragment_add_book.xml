@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/lightPrimary"
+        android:background="@color/lightBackgroundSecondary"
         android:gravity="bottom"
         android:orientation="vertical"
         android:padding="20dp">

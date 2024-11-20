@@ -8,6 +8,9 @@
         <item name="colorOnPrimary">@color/lightTextIcons</item>
         <item name="colorError">@color/lightErrorWarning</item>
         <item name="colorButtonNormal">@color/lightActiveButton</item>
+
+
+        <item name="elevationOverlayEnabled">true</item>
     </style>
 
     <!-- Derived Theme -->

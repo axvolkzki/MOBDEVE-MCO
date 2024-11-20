@@ -4,13 +4,14 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Light Mode -->
-    <color name="lightPrimary">#E0E7FF</color>
+    <color name="lightPrimary">#3D3429</color>
     <color name="lightSecondary">#1A263D</color>
     <color name="lightAccent">#FFCA60</color>
-    <color name="lightTextIcons">#152135</color>
-    <color name="lightBackground">#F7F9FC</color>
+    <color name="lightTextIcons">#7A6C5D</color>
+    <color name="lightBackground">#FFFFF3</color>
+    <color name="lightBackgroundSecondary">#FFFFF1</color>
     <color name="lightActiveButton">#00A834</color>
-    <color name="lightInactiveButton">#E0E7FF</color>
+    <color name="lightInactiveButton">#BEAF9D</color>
     <color name="lightErrorWarning">#E0553B</color>
 
     <!-- Dark Mode -->
