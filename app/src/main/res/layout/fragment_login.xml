@@ -13,52 +13,104 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <TextView
-            android:id="@+id/txvLoginUsername"
+        <LinearLayout
+            android:id="@+id/editTextUsernameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Username" />
+            android:layout_height="45dp"
+            android:background="@drawable/rounded_border"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
 
-        <EditText
-            android:id="@+id/etLoginUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text"
-            android:text="Name" />
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/ic_baseline_person_outline_24" />
 
-        <TextView
-            android:id="@+id/txvLoginPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Password" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp" />
 
-        <EditText
-            android:id="@+id/etLoginPassword"
+
+            <EditText
+                android:id="@+id/etLoginUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:hint="Username"
+                android:inputType="text"
+                android:background="@null" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/editTextPasswordLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" />
+            android:layout_height="45dp"
+            android:background="@drawable/rounded_border"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/ic_baseline_key_24" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp" />
+
+
+            <EditText
+                android:id="@+id/etLoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:background="@null" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnLoginSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="LOG IN" />
+            android:text="LOG IN"
+            android:textColor="@color/lightBackground"
+            android:background="@drawable/bg_btn_login" />
 
         <TextView
             android:id="@+id/txvLoginHaveAcc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
             android:text="Don't have account?" />
 
         <Button
             android:id="@+id/btnLoginToSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign up" />
+            android:text="SIGN UP"
+            android:textColor="@color/lightPrimary"
+            android:background="@drawable/bg_btn_signup" />
 
     </LinearLayout>
 
