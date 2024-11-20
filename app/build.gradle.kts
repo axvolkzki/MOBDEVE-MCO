@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.mobdeve.s14.amelia_delacruz.bookcol"
+    namespace = "com.mobdeve.s14.abenoja_delacruz.bookcol"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.mobdeve.s14.amelia_delacruz.bookcol"
+        applicationId = "com.mobdeve.s14.abenoja_delacruz.bookcol"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

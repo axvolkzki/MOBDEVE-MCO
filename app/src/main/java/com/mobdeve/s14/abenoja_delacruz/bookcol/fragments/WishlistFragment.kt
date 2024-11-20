@@ -1,4 +1,4 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol.fragments
+package com.mobdeve.s14.abenoja_delacruz.bookcol.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mobdeve.s14.amelia_delacruz.bookcol.TempWishAdapter
-import com.mobdeve.s14.amelia_delacruz.bookcol.TempWishDataGenerator
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.FragmentWishlistBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.TempWishAdapter
+import com.mobdeve.s14.abenoja_delacruz.bookcol.TempWishDataGenerator
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentWishlistBinding
 
 
 /**

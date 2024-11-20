@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bookcol"
         tools:targetApi="31">
-        <activity android:name=".BookDetailsActivity"
+        <activity android:name="com.mobdeve.s14.abenoja_delacruz.bookcol.BookDetailsActivity"
             android:exported="true"/>
         <activity
-            android:name=".BaseActivity"
+            android:name="com.mobdeve.s14.abenoja_delacruz.bookcol.BaseActivity"
             android:exported="false"/>
         <activity
-            android:name=".MainActivity"
+            android:name="com.mobdeve.s14.abenoja_delacruz.bookcol.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

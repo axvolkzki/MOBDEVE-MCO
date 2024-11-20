@@ -1,14 +1,14 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.ActivityBaseBinding
-import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.AddBookFragment
-import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.BooksFragment
-import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.FeedFragment
-import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.ProfileFragment
-import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.WishlistFragment
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityBaseBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.AddBookFragment
+import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.BooksFragment
+import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.FeedFragment
+import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.ProfileFragment
+import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.WishlistFragment
 
 class BaseActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityBaseBinding

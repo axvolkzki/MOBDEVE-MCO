@@ -1,4 +1,4 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol.fragments
+package com.mobdeve.s14.abenoja_delacruz.bookcol.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.mobdeve.s14.amelia_delacruz.bookcol.BaseActivity
-import com.mobdeve.s14.amelia_delacruz.bookcol.R
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.FragmentLoginBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.BaseActivity
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentLoginBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -1,4 +1,4 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol.fragments
+package com.mobdeve.s14.abenoja_delacruz.bookcol.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mobdeve.s14.amelia_delacruz.bookcol.DataGenerator
-import com.mobdeve.s14.amelia_delacruz.bookcol.MyAdapter
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.FragmentBooksBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.DataGenerator
+import com.mobdeve.s14.abenoja_delacruz.bookcol.MyAdapter
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentBooksBinding
 
 
 /**

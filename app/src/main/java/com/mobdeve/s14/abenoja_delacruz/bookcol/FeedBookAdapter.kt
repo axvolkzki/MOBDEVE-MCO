@@ -1,9 +1,9 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.ItemFeedBookLayoutBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemFeedBookLayoutBinding
 
 class FeedBookAdapter(private val data: List<BookModel>) : RecyclerView.Adapter<FeedBookAdapter.FeedBookViewHolder>() {
 

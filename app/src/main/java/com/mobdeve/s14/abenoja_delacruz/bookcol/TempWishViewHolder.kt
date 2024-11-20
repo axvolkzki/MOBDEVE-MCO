@@ -1,7 +1,7 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol
 
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.ItemWishlistLayoutBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemWishlistLayoutBinding
 
 class TempWishViewHolder(private val viewBinding: ItemWishlistLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root) {
     fun bind(wishlist: WishlistModel) {

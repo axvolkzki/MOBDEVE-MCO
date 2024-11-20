@@ -1,15 +1,10 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.ActivityMainBinding
-import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.LoginFragment
-import com.mobdeve.s14.amelia_delacruz.bookcol.fragments.SignupFragment
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityMainBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.LoginFragment
+import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.SignupFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,10 +1,10 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.ItemBookLayoutBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemBookLayoutBinding
 
 class MyAdapter(private val books: ArrayList<BookModel>) : RecyclerView.Adapter<MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

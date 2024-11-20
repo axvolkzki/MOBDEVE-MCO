@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="600dp"
     android:background="@color/white"
-    tools:context=".fragments.SignupFragment">
+    tools:context="com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.SignupFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

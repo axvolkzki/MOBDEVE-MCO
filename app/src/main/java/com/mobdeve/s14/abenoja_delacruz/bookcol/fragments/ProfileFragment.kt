@@ -1,4 +1,4 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol.fragments
+package com.mobdeve.s14.abenoja_delacruz.bookcol.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.mobdeve.s14.amelia_delacruz.bookcol.R
+import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="4dp"
-    tools:context=".fragments.BooksFragment">
+    tools:context="com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.BooksFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol
 
 data class WishlistModel(
     val name: String,

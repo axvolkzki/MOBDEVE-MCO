@@ -1,8 +1,8 @@
-package com.mobdeve.s14.amelia_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mobdeve.s14.amelia_delacruz.bookcol.databinding.ActivityBookDetailsBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityBookDetailsBinding
 
 class BookDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBookDetailsBinding
