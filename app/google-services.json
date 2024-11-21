@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "753416550966",
+    "project_id": "s14-bookcol",
+    "storage_bucket": "s14-bookcol.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753416550966:android:72806542e92e70b26ab697",
+        "android_client_info": {
+          "package_name": "com.mobdeve.s14.abenoja_delacruz.bookcol"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrBUN4z-zJb-C4PNiuVPogXXhzmcPj4RM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,4 +2,26 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Light Mode -->
+    <color name="lightPrimary">#476763</color>
+    <color name="lightSecondary">#1A263D</color>
+    <color name="lightAccent">#FFCA60</color>
+    <color name="lightTextIcons">#7A6C5D</color>
+    <color name="lightBackground">#FFFFF3</color>
+    <color name="lightBackgroundSecondary">#FFFFF1</color>
+    <color name="lightActiveButton">#143430</color>
+    <color name="lightInactiveButton">#BEAF9D</color>
+    <color name="lightErrorWarning">#E0553B</color>
+    <color name="shadow">#80000000</color> <!-- Semi-transparent black -->
+
+    <!-- Dark Mode -->
+    <color name="darkPrimary">#121212</color>
+    <color name="darkSecondary">#2A2D34</color>
+    <color name="darkAccent">#F0F0F0</color>
+    <color name="darkTextIcons">#FFFFFF</color>
+    <color name="darkBackground">#1A1A1A</color>
+    <color name="darkActiveButton">#38D366</color>
+    <color name="darkInactiveButton">#121212</color>
+    <color name="darkErrorWarning">#FF5E40</color>
 </resources>
