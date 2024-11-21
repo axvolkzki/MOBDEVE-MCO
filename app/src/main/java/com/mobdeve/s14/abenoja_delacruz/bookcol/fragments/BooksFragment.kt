@@ -31,7 +31,7 @@ class BooksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rcvBooks.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.rcvBooks.layoutManager = GridLayoutManager(requireContext(), 2)
 
         val bookList = DataGenerator.loadData()
         val adapter = MainAdapter(bookList)
