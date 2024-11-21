@@ -3,30 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/lightBackgroundSecondary"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:padding="8dp">
 
         <!-- Book Image -->
-        <ImageView
-            android:id="@+id/bookImageView"
-            android:layout_width="80dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_book_placeholder" />
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="125dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:background="@drawable/rounded_background_4dp">
+
+            <ImageView
+                android:id="@+id/bookImageView"
+                android:layout_width="60dp"
+                android:layout_height="90dp"
+                android:scaleType="centerCrop"/>
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
+            android:layout_marginTop="20dp"
             android:paddingStart="8dp"
             android:paddingLeft="8dp">
 
@@ -36,8 +49,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Book Title"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="3dp"/>
 
             <!-- Author Name -->
             <TextView
@@ -46,7 +60,8 @@
                 android:layout_height="wrap_content"
                 android:text="by Author"
                 android:textSize="14sp"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginBottom="3dp"/>
 
             <!-- Username of Poster -->
             <TextView
@@ -55,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text="Posted by Username"
                 android:textSize="12sp"
-                android:textColor="@android:color/holo_blue_light" />
+                android:textColor="@color/lightActive" />
         </LinearLayout>
 
     </LinearLayout>
