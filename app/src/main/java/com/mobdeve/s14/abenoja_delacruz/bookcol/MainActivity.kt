@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         val signupFragment = SignupFragment()
 
         // Test crash button for Firebase Crashlytics
+        /*
         val crashButton = Button(this)
         crashButton.text = "Test Crash"
         crashButton.setOnClickListener {
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         addContentView(crashButton, ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT))
+         */
 
 
         // If user is not logged in, show the main activity layout
