@@ -13,6 +13,7 @@
     <color name="lightActiveButton">#143430</color>
     <color name="lightInactiveButton">#BEAF9D</color>
     <color name="lightErrorWarning">#E0553B</color>
+    <color name="shadow">#80000000</color> <!-- Semi-transparent black -->
 
     <!-- Dark Mode -->
     <color name="darkPrimary">#121212</color>

@@ -5,16 +5,43 @@
     android:layout_height="wrap_content"
     android:padding="4dp">
 
-    <ImageView
-        android:id="@+id/imgWishlistCover"
-        android:layout_width="0dp"
+    <!-- CardView for Book Cover with Elevation -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imgWishlistCoverLayout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="8dp"
         app:layout_constraintDimensionRatio="H,2:3"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <!-- ImageView for Book Cover -->
+        <ImageView
+            android:id="@+id/imgWishlistCover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <!-- Dark Overlay for Multiply Effect -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Texture Overlay -->
+        <ImageView
+            android:id="@+id/imgTextureOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:scaleType="centerCrop"
+            android:src="@drawable/book_cover_texture" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Book Name -->
     <TextView
         android:id="@+id/txvWishlistName"
         android:layout_width="0dp"
@@ -24,8 +51,8 @@
         android:maxLines="2"
         android:textColor="@color/lightTextIcons"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgWishlistCover" />
+        app:layout_constraintEnd_toEndOf="@id/imgWishlistCoverLayout"
+        app:layout_constraintStart_toStartOf="@id/imgWishlistCoverLayout"
+        app:layout_constraintTop_toBottomOf="@id/imgWishlistCoverLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

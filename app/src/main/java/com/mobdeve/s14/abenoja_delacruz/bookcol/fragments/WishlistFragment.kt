@@ -32,7 +32,7 @@ class WishlistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rcvWishlists.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.rcvWishlists.layoutManager = GridLayoutManager(requireContext(), 2)
 
         val wishlistList = WishlistDataGenerator.loadWishlistData()
 
