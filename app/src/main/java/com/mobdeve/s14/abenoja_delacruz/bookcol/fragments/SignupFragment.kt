@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.mobdeve.s14.abenoja_delacruz.bookcol.R
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentSignupBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +24,8 @@ class SignupFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var viewBinding : FragmentSignupBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +39,43 @@ class SignupFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_signup, container, false)
+        viewBinding = FragmentSignupBinding.inflate(layoutInflater)
+        return viewBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        this.viewBinding = FragmentSignupBinding.bind(view)
+
+        this.viewBinding.btnSignUpSubmit.setOnClickListener {
+            handleSignUp()
+        }
+
+        // Navigate back to the LoginFragment
+        this.viewBinding.btnSignUpToLogin.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                // slide in from the bottom
+                .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
+                .replace(R.id.flWrapper, LoginFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+
+    private fun handleSignUp() {
+        val username = viewBinding.etSignupInputUsername.text.toString()
+        val email = viewBinding.etSignupInputEmail.text.toString()
+        val password = viewBinding.etSignupInputPassword.text.toString()
+        val confirmPassword = viewBinding.etSignupInputConfirmPassword.text.toString()
+
+        if (username.isBlank() || email.isBlank() || password.isBlank()) {
+            Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Add your Firebase Authentication code here
+        Toast.makeText(requireContext(), "Sign up successful!", Toast.LENGTH_SHORT).show()
     }
 
     companion object {
