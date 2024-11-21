@@ -52,6 +52,8 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
 
+    implementation("com.google.firebase:firebase-database")
+
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
     implementation ("androidx.camera:camera-camera2:1.2.1")
     implementation ("androidx.camera:camera-lifecycle:1.2.1")
