@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mobdeve.s14.abenoja_delacruz.bookcol.DataGenerator
-import com.mobdeve.s14.abenoja_delacruz.bookcol.MyAdapter
+import com.mobdeve.s14.abenoja_delacruz.bookcol.datagenerators.DataGenerator
+import com.mobdeve.s14.abenoja_delacruz.bookcol.MainAdapter
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentBooksBinding
 
 
@@ -34,7 +34,7 @@ class BooksFragment : Fragment() {
         binding.rcvBooks.layoutManager = GridLayoutManager(requireContext(), 3)
 
         val bookList = DataGenerator.loadData()
-        val adapter = MyAdapter(bookList)
+        val adapter = MainAdapter(bookList)
         
 //        binding.rcvBooks.adapter = adapter
 //
@@ -44,7 +44,7 @@ class BooksFragment : Fragment() {
 
 
         // When the user clicks on a book, the app will navigate to the BookDetailsActivity
-        binding.rcvBooks.adapter = MyAdapter(bookList)
+        binding.rcvBooks.adapter = MainAdapter(bookList)
     }
 
     override fun onDestroyView() {

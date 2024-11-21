@@ -1,4 +1,4 @@
-package com.mobdeve.s14.abenoja_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

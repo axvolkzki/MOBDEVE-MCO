@@ -4,20 +4,22 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.BookDetailsActivity
+import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookModel
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemBookLayoutBinding
 
-class MyAdapter(private val books: ArrayList<BookModel>) : RecyclerView.Adapter<MyViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+class MainAdapter(private val books: ArrayList<BookModel>) : RecyclerView.Adapter<MainViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val viewBinding = ItemBookLayoutBinding.inflate(layoutInflater, parent, false)
-        return MyViewHolder(viewBinding)
+        return MainViewHolder(viewBinding)
     }
 
     override fun getItemCount(): Int {
         return books.size
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.bind(books.get(position))
 
         // When the user clicks on a book, the app will navigate to the BookDetailsActivity

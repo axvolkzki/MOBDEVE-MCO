@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bookcol"
         tools:targetApi="31">
-        <activity android:name=".BookDetailsActivity"
+        <activity android:name=".activities.BookDetailsActivity"
             android:exported="true"/>
         <activity
-            android:name=".BaseActivity"
+            android:name=".activities.BaseActivity"
             android:exported="false"/>
         <activity
             android:name=".MainActivity"

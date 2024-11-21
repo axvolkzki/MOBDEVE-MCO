@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mobdeve.s14.abenoja_delacruz.bookcol.TempWishAdapter
-import com.mobdeve.s14.abenoja_delacruz.bookcol.TempWishDataGenerator
+import com.mobdeve.s14.abenoja_delacruz.bookcol.adapters.WishlistAdapter
+import com.mobdeve.s14.abenoja_delacruz.bookcol.datagenerators.WishlistDataGenerator
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentWishlistBinding
 
 
@@ -34,9 +34,9 @@ class WishlistFragment : Fragment() {
 
         binding.rcvWishlists.layoutManager = GridLayoutManager(requireContext(), 3)
 
-        val wishlistList = TempWishDataGenerator.loadWishlistData()
+        val wishlistList = WishlistDataGenerator.loadWishlistData()
 
-        binding.rcvWishlists.adapter = TempWishAdapter(wishlistList)
+        binding.rcvWishlists.adapter = WishlistAdapter(wishlistList)
 
         // LOG THE WISHLIST DATA SIZE TO CHECK IF IT IS LOADED
         Log.d("WishlistFragment", "Wishlist Data Size: ${wishlistList.size}")

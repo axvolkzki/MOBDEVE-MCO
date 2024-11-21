@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.mobdeve.s14.abenoja_delacruz.bookcol.BaseActivity
+import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.BaseActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentLoginBinding
 
 // TODO: Rename parameter arguments, choose names that match

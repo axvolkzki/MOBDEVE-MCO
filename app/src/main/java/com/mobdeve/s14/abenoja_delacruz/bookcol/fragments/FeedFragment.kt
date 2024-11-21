@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s14.abenoja_delacruz.bookcol.DataGenerator
-import com.mobdeve.s14.abenoja_delacruz.bookcol.FeedBookAdapter
+import com.mobdeve.s14.abenoja_delacruz.bookcol.datagenerators.DataGenerator
+import com.mobdeve.s14.abenoja_delacruz.bookcol.adapters.FeedBookAdapter
 import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 
 

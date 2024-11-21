@@ -1,7 +1,10 @@
-package com.mobdeve.s14.abenoja_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol.datagenerators
+
+import com.mobdeve.s14.abenoja_delacruz.bookcol.R
+import com.mobdeve.s14.abenoja_delacruz.bookcol.models.WishlistModel
 
 
-class TempWishDataGenerator {
+class WishlistDataGenerator {
     companion object {
         fun loadWishlistData(): ArrayList<WishlistModel> {
             val data = ArrayList<WishlistModel>()
