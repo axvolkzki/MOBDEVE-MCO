@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:alpha="0.5"
             android:scaleType="centerCrop"
-            android:src="@drawable/book_cover_texture" />
+            android:src="@mipmap/book_cover_texture" />
 
     </androidx.cardview.widget.CardView>
 

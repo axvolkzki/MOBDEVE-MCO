@@ -18,9 +18,6 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val loginFragment = LoginFragment()
-        val signupFragment = SignupFragment()
-
         // Test crash button for Firebase Crashlytics
         /*
         val crashButton = Button(this)
@@ -83,5 +80,15 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed() // Exit the app
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
     }
 }
