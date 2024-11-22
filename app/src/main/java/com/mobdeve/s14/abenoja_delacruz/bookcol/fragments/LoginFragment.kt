@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.BaseActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentLoginBinding
 
@@ -49,22 +50,23 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Handle login button click
         viewBinding.btnLoginSubmit.setOnClickListener {
             val username = viewBinding.etLoginUsername.text.toString()
             val password = viewBinding.etLoginPassword.text.toString()
 
-            // Validate input
             if (validateInput(username, password)) {
-                // Simulate login
-                if (username == "admin" && password == "admin") {
-                    val intent = Intent(requireContext(), BaseActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                } else {
-                    // Show error message
-                    Toast.makeText(requireContext(), "Invalid login credentials", Toast.LENGTH_SHORT).show()
-                }
+                performLogin(username, password)
             }
+        }
+
+        // Navigate to SignupFragment
+        viewBinding.btnLoginToSignUp.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
+                .replace(R.id.flWrapper, SignupFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -79,6 +81,20 @@ class LoginFragment : Fragment() {
                 false
             }
             else -> true
+        }
+    }
+
+    private fun performLogin(username: String, password: String) {
+        // Simulated login logic (Replace with Firebase Authentication)
+        if (username == "admin" && password == "admin") {
+            Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
+
+            // Navigate to BaseActivity
+            val intent = Intent(requireContext(), BaseActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        } else {
+            Toast.makeText(requireContext(), "Invalid login credentials", Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -48,7 +48,7 @@
 
 
             <EditText
-                android:id="@+id/txvSignupInputUsername"
+                android:id="@+id/etSignupInputUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -83,7 +83,7 @@
 
 
             <EditText
-                android:id="@+id/txvSignupInputEmaile"
+                android:id="@+id/etSignupInputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -97,6 +97,41 @@
 
         <LinearLayout
             android:id="@+id/editTextPasswordLayout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_border"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_margin="20dp"
+                android:background="@drawable/ic_baseline_key_24" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:background="@android:color/darker_gray" />
+
+
+            <EditText
+                android:id="@+id/etSignupInputPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="16dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/editTextConfirmPasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/rounded_border"
@@ -119,14 +154,14 @@
 
 
             <EditText
-                android:id="@+id/txvSignupInputPassword"
+                android:id="@+id/etSignupInputConfirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp"
                 android:textSize="15sp"
-                android:hint="Password"
+                android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:background="@null"/>
         </LinearLayout>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_login_background"
-    tools:context="com.mobdeve.s14.abenoja_delacruz.bookcol.MainActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"

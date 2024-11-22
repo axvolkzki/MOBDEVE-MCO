@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityMainBinding
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.LoginFragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.SignupFragment
@@ -16,9 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
-        val loginFragment = LoginFragment()
-        val signupFragment = SignupFragment()
 
         // Test crash button for Firebase Crashlytics
         /*
@@ -50,38 +48,47 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-        // Temporary solution for navigation between login and signup fragments
+        // When user is not logged in, show the login and signup buttons
         viewBinding.btnLogIn.setOnClickListener {
-            supportFragmentManager.beginTransaction().apply {
-                setCustomAnimations(
-                    R.anim.slide_in, // Enter animation
-                    R.anim.slide_out, // Exit animation
-                    R.anim.slide_in, // Pop enter animation
-                    R.anim.slide_out  // Pop exit animation
-                )
-
-
-
-                replace(viewBinding.flWrapper.id, loginFragment)
-                addToBackStack(null) // Allows navigating back to MainActivity
-                commit()
-            }
+            navigateToFragment(LoginFragment())
         }
 
+        // Navigate to SignupFragment on button click
         viewBinding.btnSignUp.setOnClickListener {
-            supportFragmentManager.beginTransaction().apply {
-                setCustomAnimations(
-                    R.anim.slide_in,
-                    R.anim.slide_out,
-                    R.anim.slide_in,
-                    R.anim.slide_out
-                )
-
-
-                replace(viewBinding.flWrapper.id, signupFragment)
-                addToBackStack(null)
-                commit()
-            }
+            navigateToFragment(SignupFragment())
         }
+    }
+
+    // Helper function to handle fragment navigation
+    private fun navigateToFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in, // Enter animation
+                R.anim.slide_out, // Exit animation
+                R.anim.slide_in, // Pop enter animation
+                R.anim.slide_out  // Pop exit animation
+            )
+            .replace(viewBinding.flWrapper.id, fragment) // Replace the current fragment
+            .addToBackStack(null) // Add transaction to the back stack
+            .commit()
+    }
+
+    override fun onBackPressed() {
+        // Handle back navigation
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack() // Navigate to the previous fragment
+        } else {
+            super.onBackPressed() // Exit the app
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
     }
 }

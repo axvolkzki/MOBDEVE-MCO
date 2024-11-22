@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.ISBNScannerActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentAddBookBinding
 
@@ -160,9 +158,12 @@ class AddBookFragment : Fragment() {
     private fun handleScannedBarcodes(barcodes: List<String>) {
         barcodes.forEach { barcode ->
             // Update the UI or perform any action with the barcode
+            // Toast message for debugging
             Toast.makeText(requireContext(), "Scanned: $barcode", Toast.LENGTH_SHORT).show()
         }
     }
+
+
 
     companion object {
         /**
