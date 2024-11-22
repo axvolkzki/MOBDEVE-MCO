@@ -1,6 +1,5 @@
 package com.mobdeve.s14.abenoja_delacruz.bookcol.fragments
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.ISBNScannerActivity
+import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.ScannerActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentAddBookBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -151,7 +150,7 @@ class AddBookFragment : Fragment() {
 
 
     private fun startScanner() {
-        val intent = Intent(requireContext(), ISBNScannerActivity::class.java)
+        val intent = Intent(requireContext(), ScannerActivity::class.java)
         scannerLauncher.launch(intent)
     }
 

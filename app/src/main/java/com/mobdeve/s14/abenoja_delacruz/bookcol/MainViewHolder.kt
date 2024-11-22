@@ -3,7 +3,6 @@ package com.mobdeve.s14.abenoja_delacruz.bookcol
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookModel
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemBookLayoutBinding
-import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.ImageUtils
 
 class MainViewHolder(private val viewBinding: ItemBookLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root) {
     fun bind(book: BookModel) {

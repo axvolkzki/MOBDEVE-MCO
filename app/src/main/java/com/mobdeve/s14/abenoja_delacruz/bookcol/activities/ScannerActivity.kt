@@ -20,12 +20,12 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityIsbnscannerBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityScannerBinding
 import java.util.concurrent.Executors
 
-class ISBNScannerActivity : AppCompatActivity() {
+class ScannerActivity : AppCompatActivity() {
 
-    private lateinit var viewBinding: ActivityIsbnscannerBinding
+    private lateinit var viewBinding: ActivityScannerBinding
 
     private lateinit var cameraSelector: CameraSelector
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
@@ -38,7 +38,7 @@ class ISBNScannerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewBinding = ActivityIsbnscannerBinding.inflate(layoutInflater)
+        viewBinding = ActivityScannerBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
         cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
@@ -169,12 +169,12 @@ class ISBNScannerActivity : AppCompatActivity() {
 
 
     companion object {
-        private val TAG = ISBNScannerActivity::class.simpleName
+        private val TAG = ScannerActivity::class.simpleName
         private var onScan: ((barcodes: List<Barcode>) -> Unit)? = null
 
         fun startScanner(context: Context, onScan: (barcodes: List<Barcode>) -> Unit) {
             this.onScan = onScan
-            Intent(context, ISBNScannerActivity::class.java).also {
+            Intent(context, ScannerActivity::class.java).also {
                 context.startActivity(it)
             }
         }
