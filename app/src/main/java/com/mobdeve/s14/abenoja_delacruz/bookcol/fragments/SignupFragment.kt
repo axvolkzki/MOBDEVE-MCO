@@ -14,8 +14,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.BaseActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentSignupBinding
-import com.mobdeve.s14.abenoja_delacruz.bookcol.helpers.toast
-import com.mobdeve.s14.abenoja_delacruz.bookcol.models.UserModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
