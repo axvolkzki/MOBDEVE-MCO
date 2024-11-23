@@ -151,12 +151,14 @@ class BarcodeScannerActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val bookResponse = response.body()
                     if (bookResponse != null) {
-                        Log.d(TAG, "Book data fetched successfully: ${bookResponse.toString()}")
+                        Log.d(TAG, "Book data fetched successfully: $bookResponse")
 
                         // Pass the book details to ScannedBookPreviewActivity
                         val intent = Intent(this@BarcodeScannerActivity, ScannedBookPreviewActivity::class.java)
                         intent.putExtra("BOOK_DETAILS", bookResponse)
                         startActivity(intent)
+                    } else {
+                        Log.e(TAG, "Book response is null")
                     }
                 } else {
                     Log.e(TAG, "Error fetching book data: ${response.message()}")
@@ -168,6 +170,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
             }
         })
     }
+
 
 
 

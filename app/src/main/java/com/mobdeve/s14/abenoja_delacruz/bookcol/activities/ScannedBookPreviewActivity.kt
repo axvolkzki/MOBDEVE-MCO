@@ -20,6 +20,9 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
         // Get book details from intent
         val bookDetails = intent.getSerializableExtra("BOOK_DETAILS") as? BookModel
 
+        // Log book details to see if they're properly passed
+        Log.d(TAG, "Received book details: $bookDetails")
+
         if (bookDetails != null) {
             // Set data to UI elements
             viewBinding.txvPrevTitle.text = bookDetails.title
