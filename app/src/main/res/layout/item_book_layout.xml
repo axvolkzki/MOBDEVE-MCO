@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp">
+
+    <!-- CardView for Book Cover with Elevation -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imgBookCoverLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="8dp"
+        app:layout_constraintDimensionRatio="H,2:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- ImageView for Book Cover -->
+        <ImageView
+            android:id="@+id/imgBookCover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <!-- Dark Overlay for Multiply Effect -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- Texture Overlay -->
+        <ImageView
+            android:id="@+id/imgTextureOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/book_cover_texture" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Book Name -->
+    <TextView
+        android:id="@+id/txvBookName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/lightTextIcons"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/imgBookCoverLayout"
+        app:layout_constraintStart_toStartOf="@id/imgBookCoverLayout"
+        app:layout_constraintTop_toBottomOf="@id/imgBookCoverLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
