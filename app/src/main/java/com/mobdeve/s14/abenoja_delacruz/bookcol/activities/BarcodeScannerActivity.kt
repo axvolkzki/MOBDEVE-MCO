@@ -3,6 +3,7 @@ package com.mobdeve.s14.abenoja_delacruz.bookcol.activities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.nfc.Tag
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -32,6 +33,7 @@ import java.util.concurrent.Executors
 class BarcodeScannerActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityScannerBinding
+    private val TAG: String = "CHECK_RESPONSE"
 
     private lateinit var cameraSelector: CameraSelector
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
@@ -151,7 +153,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val bookResponse = response.body()
                     if (bookResponse != null) {
-                        Log.d(TAG, "Book data fetched successfully: $bookResponse")
+                        Log.d(TAG, "[onResponse] Book data fetched successfully: ${bookResponse.title} by ${bookResponse.authors?.joinToString { it.name }}")
 
                         // Pass the book details to ScannedBookPreviewActivity
                         val intent = Intent(this@BarcodeScannerActivity, ScannedBookPreviewActivity::class.java)
