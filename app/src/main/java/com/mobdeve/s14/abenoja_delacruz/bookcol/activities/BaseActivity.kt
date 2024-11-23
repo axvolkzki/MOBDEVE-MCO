@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityBaseBinding
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.AddBookFragment
-import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.BooksFragment
+import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.LibraryFragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.FeedFragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.ProfileFragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.WishlistFragment
@@ -19,19 +19,19 @@ class BaseActivity : AppCompatActivity() {
         viewBinding = ActivityBaseBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val booksFragment = BooksFragment()
+        val libraryFragment = LibraryFragment()
         val feedFragment = FeedFragment()
         val addBookFragment = AddBookFragment()
         val wishlistFragment = WishlistFragment()
         val profileFragment = ProfileFragment()
 
-        makeCurrentFragment(booksFragment)
+        makeCurrentFragment(libraryFragment)
         viewBinding.txvPageTitle.text = "Books"  // Set initial title
 
         viewBinding.bnvNavbar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_shelf -> {
-                    makeCurrentFragment(booksFragment)
+                    makeCurrentFragment(libraryFragment)
                     viewBinding.txvPageTitle.text = "Books"
                 }
                 R.id.nav_feed -> {

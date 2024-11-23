@@ -24,10 +24,7 @@ class FeedBookAdapter(private val data: List<BookModel>) : RecyclerView.Adapter<
 
     class FeedBookViewHolder(private val viewBinding: ItemFeedBookLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(book: BookModel) {
-            viewBinding.bookTitleTextView.text = book.name
-            viewBinding.bookAuthorTextView.text = "by ${book.author}"
-            viewBinding.postedByTextView.text = "Posted by ${book.postedBy}"
-            viewBinding.bookImageView.setImageResource(book.cover)
+            viewBinding.bookTitleTextView.text = book.title
         }
     }
 }

@@ -15,15 +15,21 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.google.common.util.concurrent.ListenableFuture
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import com.mobdeve.s14.abenoja_delacruz.bookcol.api.OpenLibraryApiService
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityScannerBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookModel
+import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.RetrofitInstance
+import retrofit2.Call
 import java.util.concurrent.Executors
 
-class ScannerActivity : AppCompatActivity() {
+class BarcodeScannerActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityScannerBinding
 
@@ -119,6 +125,15 @@ class ScannerActivity : AppCompatActivity() {
                     }
                     setResult(RESULT_OK, resultIntent)
                     finish()
+
+                    // check if barcode is not empty
+                    if (barcodeValues.isNotEmpty()) {
+                        // Fetch book data from OpenLibrary API
+                        fetchBookDetails(barcodeValues[0])
+                    } else {
+                        Log.e(TAG, "Barcode value is empty.")
+                    }
+
                 }
             }
             .addOnFailureListener {
@@ -127,6 +142,38 @@ class ScannerActivity : AppCompatActivity() {
                 imageProxy.close()
             }
     }
+
+    private fun fetchBookDetails(isbn: String) {
+        val call = RetrofitInstance.api.getBookByISBN(isbn)
+
+        call.enqueue(object : retrofit2.Callback<BookModel> {
+            override fun onResponse(call: Call<BookModel>, response: retrofit2.Response<BookModel>) {
+                if (response.isSuccessful) {
+                    val bookResponse = response.body()
+                    if (bookResponse != null) {
+                        Log.d(TAG, "Book data fetched successfully: ${bookResponse.toString()}")
+
+                        // Pass the book details to ScannedBookPreviewActivity
+                        val intent = Intent(this@BarcodeScannerActivity, ScannedBookPreviewActivity::class.java)
+                        intent.putExtra("BOOK_DETAILS", bookResponse)
+                        startActivity(intent)
+                    }
+                } else {
+                    Log.e(TAG, "Error fetching book data: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<BookModel>, t: Throwable) {
+                Log.e(TAG, "Error fetching book data: ${t.message}")
+            }
+        })
+    }
+
+
+
+
+
+
 
     // Lifecycle methods
     override fun onPause() {
@@ -169,12 +216,12 @@ class ScannerActivity : AppCompatActivity() {
 
 
     companion object {
-        private val TAG = ScannerActivity::class.simpleName
+        private val TAG = BarcodeScannerActivity::class.simpleName
         private var onScan: ((barcodes: List<Barcode>) -> Unit)? = null
 
         fun startScanner(context: Context, onScan: (barcodes: List<Barcode>) -> Unit) {
             this.onScan = onScan
-            Intent(context, ScannerActivity::class.java).also {
+            Intent(context, BarcodeScannerActivity::class.java).also {
                 context.startActivity(it)
             }
         }

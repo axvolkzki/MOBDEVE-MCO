@@ -6,10 +6,6 @@ import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemFeedBookLayoutBi
 
 class FeedBookViewHolder(private val viewBinding: ItemFeedBookLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root) {
     fun bind(book: BookModel) {
-        // Assuming BookModel has 'title', 'author', 'username', and 'cover' properties
-        viewBinding.bookTitleTextView.text = book.name
-        viewBinding.bookAuthorTextView.text = "by ${book.author}"
-        viewBinding.postedByTextView.text = "Posted by ${book.postedBy}"
-        viewBinding.bookImageView.setImageResource(book.cover) // Assuming 'cover' holds the drawable resource ID
+        viewBinding.bookTitleTextView.text = book.title
     }
 }

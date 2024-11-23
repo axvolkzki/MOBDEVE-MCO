@@ -1,4 +1,4 @@
-package com.mobdeve.s14.abenoja_delacruz.bookcol
+package com.mobdeve.s14.abenoja_delacruz.bookcol.adapters
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,26 +7,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.BookDetailsActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookModel
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemBookLayoutBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.viewholders.LibraryViewHolder
 
-class MainAdapter(private val books: ArrayList<BookModel>) : RecyclerView.Adapter<MainViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
+class LibraryAdapter(private val books: ArrayList<BookModel>) : RecyclerView.Adapter<LibraryViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val viewBinding = ItemBookLayoutBinding.inflate(layoutInflater, parent, false)
-        return MainViewHolder(viewBinding)
+        return LibraryViewHolder(viewBinding)
     }
 
     override fun getItemCount(): Int {
         return books.size
     }
 
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: LibraryViewHolder, position: Int) {
         holder.bind(books.get(position))
 
         // When the user clicks on a book, the app will navigate to the BookDetailsActivity
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
-            intent.putExtra("KEY_COVER", books.get(position).cover)
-            intent.putExtra("KEY_NAME", books.get(position).name)
+            intent.putExtra("KEY_TITLE", books.get(position).title)
             holder.itemView.context.startActivity(intent)
         }
     }

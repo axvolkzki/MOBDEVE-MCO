@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s14.abenoja_delacruz.bookcol.datagenerators.DataGenerator
 import com.mobdeve.s14.abenoja_delacruz.bookcol.adapters.FeedBookAdapter
 import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 
@@ -31,15 +30,12 @@ class FeedFragment : Fragment() {
         // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.recyclerView)
 
-        // Load data
-        val data = DataGenerator.loadData() // Ensure this returns a List<BookModel>
-
         // Create the adapter
-        adapter = FeedBookAdapter(data)
+        //adapter = FeedBookAdapter(data)
 
         // Set up RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(context) // Use a LinearLayoutManager
-        recyclerView.adapter = adapter // Set the adapter to RecyclerView
+        //recyclerView.adapter = adapter // Set the adapter to RecyclerView
 
         return view
     }
