@@ -1,24 +1,13 @@
 package com.mobdeve.s14.abenoja_delacruz.bookcol.utils
 
-import android.annotation.SuppressLint
-import com.google.firebase.firestore.FirebaseFirestore
 
 object FirestoreReferences {
-    @SuppressLint("StaticFieldLeak")
-    private val dbFirestore = FirebaseFirestore.getInstance()
+    // Collection references
+    const val USER_COLLECTION = "Users"
+    const val BOOK_COLLECTION = "Books"
 
-    // Reference to the collections
-    val usersCollection = dbFirestore.collection("Users")
-    private val booksCollection = dbFirestore.collection("Books")
-
-    // Helper to get user-specific books
-    fun getUserBooks(userID: String) = booksCollection.whereEqualTo("userID", userID)
-
-    // Helper to get a specific user
-    fun getUser(userID: String) = usersCollection.document(userID)
-
-    // Helper to get a specific book
-    fun getBook(bookID: String) = booksCollection.document(bookID)
-
-    fun userLibraryCollection(userId: String) = usersCollection.document(userId).collection("Library")
+    // User fields
+    const val USERID_FIELD = "userId"
+    const val USERNAME_FIELD = "username"
+    const val EMAIL_FIELD = "email"
 }
