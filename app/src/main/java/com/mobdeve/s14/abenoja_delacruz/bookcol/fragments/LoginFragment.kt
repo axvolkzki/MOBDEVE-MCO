@@ -36,7 +36,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val viewBinding get() = _binding!!
 
-
+    // DB Schema
     private lateinit var mAuth: FirebaseAuth        // Firebase Authentication
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,13 +114,14 @@ class LoginFragment : Fragment() {
     }
 
     private fun performLogin(username: String, password: String) {
-        // Use FirestoreReference to check if the user exists
-        FirestoreReferences.usersCollection
-            .whereEqualTo("username", username)
+        // Use FirebaseFirestore to check if the user exists
+        FirebaseFirestore.getInstance()
+            .collection(FirestoreReferences.USER_COLLECTION)
+            .whereEqualTo(FirestoreReferences.USERNAME_FIELD, username)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
-                    val email = querySnapshot.documents[0].getString("email") ?: ""
+                    val email = querySnapshot.documents[0].getString(FirestoreReferences.EMAIL_FIELD) ?: ""
                     loginUserWithEmail(email, password)
                 } else {
                     requireContext().toast("No user found with this username")
@@ -157,7 +158,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun fetchUserData(userId: String) {
-        FirestoreReferences.usersCollection
+        FirebaseFirestore.getInstance()
+            .collection(FirestoreReferences.USER_COLLECTION)
             .document(userId)
             .get()
             .addOnSuccessListener { documentSnapshot ->

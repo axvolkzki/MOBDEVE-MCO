@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.BookDetailsActivity
-import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookModel
+import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookResponseModel
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemBookLayoutBinding
 import com.mobdeve.s14.abenoja_delacruz.bookcol.viewholders.LibraryViewHolder
 
-class LibraryAdapter(private val books: ArrayList<BookModel>) : RecyclerView.Adapter<LibraryViewHolder>() {
+class LibraryAdapter(private val books: ArrayList<BookResponseModel>) : RecyclerView.Adapter<LibraryViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val viewBinding = ItemBookLayoutBinding.inflate(layoutInflater, parent, false)

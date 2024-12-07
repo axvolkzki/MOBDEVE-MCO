@@ -156,7 +156,6 @@ class AddBookFragment : Fragment() {
 
     private fun handleScannedBarcodes(barcodes: List<String>) {
         barcodes.forEach { barcode ->
-            // Update the UI or perform any action with the barcode
             // Toast message for debugging
             Toast.makeText(requireContext(), "Scanned: $barcode", Toast.LENGTH_SHORT).show()
         }

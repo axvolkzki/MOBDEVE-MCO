@@ -1,24 +1,32 @@
 package com.mobdeve.s14.abenoja_delacruz.bookcol.utils
 
-import android.annotation.SuppressLint
-import com.google.firebase.firestore.FirebaseFirestore
 
 object FirestoreReferences {
-    @SuppressLint("StaticFieldLeak")
-    private val dbFirestore = FirebaseFirestore.getInstance()
+    // Collection references
+    const val USER_COLLECTION = "Users"
+    const val BOOK_COLLECTION = "Books"
+    const val LIBRARY_COLLECTION = "Libraries"
 
-    // Reference to the collections
-    val usersCollection = dbFirestore.collection("Users")
-    private val booksCollection = dbFirestore.collection("Books")
+    // User fields
+    const val USERID_FIELD = "userId"
+    const val USERNAME_FIELD = "username"
+    const val EMAIL_FIELD = "email"
 
-    // Helper to get user-specific books
-    fun getUserBooks(userID: String) = booksCollection.whereEqualTo("userID", userID)
+    // Book fields
+    const val BOOKID_FIELD = "bookId"
+    const val COVER_FIELD = "cover"
+    const val TITLE_FIELD = "title"
+    const val AUTHOR_FIELD = "author"
+    const val PUBLISHER_FIELD = "publisher"
+    const val PUBLISH_DATE_FIELD = "publishDate"
+    const val ISBN_FIELD = "isbn"
+    const val SUMMARY_FIELD = "summary"
+    const val PAGE_COUNT_FIELD = "pageCount"
+    const val LANGUAGE_FIELD = "language"
+    const val GENRE_FIELD = "genre"
 
-    // Helper to get a specific user
-    fun getUser(userID: String) = usersCollection.document(userID)
-
-    // Helper to get a specific book
-    fun getBook(bookID: String) = booksCollection.document(bookID)
-
-    fun userLibraryCollection(userId: String) = usersCollection.document(userId).collection("Library")
+    // Library fields
+    const val LIBRARY_USERID_FIELD = "userId"
+    const val LIBRARY_BOOKID_FIELD = "bookId"
+    const val DATE_ADDED_FIELD = "dateAdded"
 }

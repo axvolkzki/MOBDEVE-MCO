@@ -3,7 +3,6 @@ package com.mobdeve.s14.abenoja_delacruz.bookcol.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -87,8 +86,9 @@ class SignupFragment : Fragment() {
         if (!validateInput(username, email, password, confirmPassword)) return
 
         // Check if username already exists
-        FirestoreReferences.usersCollection
-            .whereEqualTo("username", username)
+        FirebaseFirestore.getInstance()
+            .collection(FirestoreReferences.USER_COLLECTION)
+            .whereEqualTo(FirestoreReferences.USERNAME_FIELD, username)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (querySnapshot.isEmpty) {
@@ -143,7 +143,6 @@ class SignupFragment : Fragment() {
     }
 
 
-
     private fun registerNewUser(username: String, email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
@@ -169,7 +168,8 @@ class SignupFragment : Fragment() {
     }
 
     private fun saveUserToFirestore(userModel: UserModel) {
-        FirestoreReferences.usersCollection
+        FirebaseFirestore.getInstance()
+            .collection(FirestoreReferences.USER_COLLECTION)
             .document(userModel.userId)
             .set(userModel)
             .addOnSuccessListener {
