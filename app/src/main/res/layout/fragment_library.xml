@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="4dp"
-    tools:context="com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.BooksFragment">
+    tools:context=".fragments.LibraryFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvBooks"
+        android:id="@+id/rcvLibrary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
