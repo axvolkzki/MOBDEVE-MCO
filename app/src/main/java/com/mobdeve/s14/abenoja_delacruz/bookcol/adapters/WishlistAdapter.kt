@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.BookDetailsActivity
+import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.LibraryBookDetailsActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.viewholders.WishlistViewHolder
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemWishlistLayoutBinding
 import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookResponseModel
@@ -25,7 +25,7 @@ class WishlistAdapter(private val books: ArrayList<BookResponseModel>) : Recycle
 
         // When the user clicks on a book, the app will navigate to the BookDetailsActivity
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
+            val intent = Intent(holder.itemView.context, LibraryBookDetailsActivity::class.java)
             intent.putExtra("KEY_TITLE", books[position].title)
             holder.itemView.context.startActivity(intent)
         }

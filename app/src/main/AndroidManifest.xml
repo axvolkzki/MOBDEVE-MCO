@@ -27,7 +27,7 @@
             android:name=".activities.BarcodeScannerActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.BookDetailsActivity"
+            android:name=".activities.LibraryBookDetailsActivity"
             android:exported="true" />
         <activity
             android:name=".activities.BaseActivity"
