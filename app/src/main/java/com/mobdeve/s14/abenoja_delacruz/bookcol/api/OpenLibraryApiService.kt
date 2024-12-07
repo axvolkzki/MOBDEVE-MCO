@@ -6,15 +6,11 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface OpenLibraryApiService {
-    // Fetch book details by ISBN
-    @GET("/isbn/{isbn}.json")
-    fun getBookByISBN(
-        @Path("isbn") isbn: String
-    ): Call<BookResponseModel>
+    // Resolves ISBN to book metadata
+    @GET("isbn/{isbn}.json")
+    fun getBookByISBN(@Path("isbn") isbn: String): Call<Map<String, Any>>
 
-    // Fetch book details by OLID
-    @GET("/books/{olid}.json")
-    fun getBookByOLID(
-        @Path("olid") olid: String
-    ): Call<BookResponseModel>
+    // Fetches book details by OLID
+    @GET("books/{olid}.json")
+    fun getBookByOLID(@Path("olid") olid: String): Call<BookResponseModel>
 }

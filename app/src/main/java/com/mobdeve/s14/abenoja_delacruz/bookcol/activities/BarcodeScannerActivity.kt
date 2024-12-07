@@ -142,34 +142,34 @@ class BarcodeScannerActivity : AppCompatActivity() {
     }
 
     private fun fetchBookDetailsByISBN(isbn: String) {
-        val call = RetrofitInstance.api.getBookByISBN(isbn)
+        val call = RetrofitInstance.api.getBookByISBN(isbn) // This hits https://openlibrary.org/isbn/{isbn}.json
 
-        call.enqueue(object : retrofit2.Callback<BookResponseModel> {
+        call.enqueue(object : retrofit2.Callback<Map<String, Any>> {
             override fun onResponse(
-                call: Call<BookResponseModel>,
-                response: retrofit2.Response<BookResponseModel>
+                call: Call<Map<String, Any>>,
+                response: retrofit2.Response<Map<String, Any>>
             ) {
                 if (response.isSuccessful) {
-                    val bookResponse = response.body()
-                    if (bookResponse != null) {
-                        Log.d(TAG, "Book fetched successfully: ${bookResponse.title}")
-                        // Continue processing the book details
-                        val olid = bookResponse.key?.removePrefix("/books/") // Extract OLID
-                        if (olid != null) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        // Extract the key (e.g., "/books/OL26344076M")
+                        val bookKey = responseBody["key"] as? String
+                        if (bookKey != null) {
+                            val olid = bookKey.split("/").last() // Extract "OL26344076M"
                             fetchBookDetailsByOLID(olid)
                         } else {
-                            Log.e(TAG, "OLID not found for ISBN: $isbn")
+                            Log.e(TAG, "No 'key' field found in response for ISBN: $isbn")
                         }
                     } else {
-                        Log.e(TAG, "Book details are null for ISBN: $isbn")
+                        Log.e(TAG, "Response body is null for ISBN: $isbn")
                     }
                 } else {
-                    Log.e(TAG, "Error fetching book data: ${response.message()}")
+                    Log.e(TAG, "Error resolving ISBN to OLID: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: Call<BookResponseModel>, t: Throwable) {
-                Log.e(TAG, "Error fetching book data: ${t.message}")
+            override fun onFailure(call: Call<Map<String, Any>>, t: Throwable) {
+                Log.e(TAG, "Failed to resolve ISBN to OLID: ${t.message}")
             }
         })
     }
@@ -177,8 +177,10 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
 
 
+
+
     private fun fetchBookDetailsByOLID(olid: String) {
-        val call = RetrofitInstance.api.getBookByOLID(olid)
+        val call = RetrofitInstance.api.getBookByOLID(olid) // This hits https://openlibrary.org/books/{olid}.json
 
         call.enqueue(object : retrofit2.Callback<BookResponseModel> {
             override fun onResponse(
@@ -189,10 +191,8 @@ class BarcodeScannerActivity : AppCompatActivity() {
                     val bookResponse = response.body()
                     if (bookResponse != null) {
                         Log.d(TAG, "Book fetched successfully: ${bookResponse.title}")
-                        Log.d(TAG, "Authors: ${bookResponse.authors?.joinToString { it.name.orEmpty() }}")
-                        Log.d(TAG, "Publisher: ${bookResponse.publishers?.joinToString { it.name.orEmpty() }}")
 
-                        // Pass the book details to ScannedBookPreviewActivity
+                        // Pass book details to ScannedBookPreviewActivity
                         val intent = Intent(this@BarcodeScannerActivity, ScannedBookPreviewActivity::class.java)
                         intent.putExtra("BOOK_DETAILS", bookResponse)
                         startActivity(intent)
@@ -200,15 +200,16 @@ class BarcodeScannerActivity : AppCompatActivity() {
                         Log.e(TAG, "Book details are null for OLID: $olid")
                     }
                 } else {
-                    Log.e(TAG, "Error fetching book details: ${response.message()}")
+                    Log.e(TAG, "Error fetching book details by OLID: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<BookResponseModel>, t: Throwable) {
-                Log.e(TAG, "Error fetching book details: ${t.message}")
+                Log.e(TAG, "Failed to fetch book details by OLID: ${t.message}")
             }
         })
     }
+
 
 
 

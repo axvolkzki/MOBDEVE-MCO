@@ -25,25 +25,9 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
 
         if (bookDetails != null) {
             // Set data to UI elements
-            viewBinding.txvPrevTitle.text = bookDetails.title ?: "Unknown Title"
-            viewBinding.txvPrevISBN.text = bookDetails.isbn.joinToString(", ") { it }
-
-            // Handle authors (if any)
-            val authors = bookDetails.authors?.joinToString(", ") { it.name.orEmpty() } ?: "Unknown Authors"
-            viewBinding.txvPrevAuthor.text = authors
-
-            // Set publisher if available
-            val publishers = bookDetails.publishers?.joinToString(", ") { it.name.orEmpty() } ?: "Unknown Publisher"
-            viewBinding.txvPrevPublisher.text = publishers
-
-            // Set publish date if available
-            viewBinding.txvPrevDatePublished.text = bookDetails.publish_date ?: "Unknown Publish Date"
-
-            // Set number of pages
-            viewBinding.txvPrevPageNumber.text = bookDetails.number_of_pages?.toString() ?: "Unknown"
 
             // Set cover image (if available)
-            val coverUrl = bookDetails.cover?.get("medium") // Get medium-sized cover image URL
+            val coverUrl = bookDetails.covers?.firstOrNull()?.let { "https://covers.openlibrary.org/b/id/$it-M.jpg" }
             if (!coverUrl.isNullOrEmpty()) {
                 Glide.with(this)
                     .load(coverUrl)
@@ -52,9 +36,39 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
                 // Provide a default image if no cover is available
                 viewBinding.imgPrevCover.setImageResource(R.drawable.bg_login_background)
             }
+
+            // Set title
+            viewBinding.txvPrevTitle.text = bookDetails.title ?: "Unknown Title"
+
+            // Handle authors (if any) - If authors is null, use an empty list
+            val authors = bookDetails.authors?.joinToString(", ") { it.name.orEmpty() } ?: "Unknown Authors"
+            viewBinding.txvPrevAuthor.text = authors
+
+            // Set publisher if available - If publishers is null, use an empty list
+            val publishers = bookDetails.publishers?.joinToString(", ") ?: "Unknown Publisher"
+            viewBinding.txvPrevPublisher.text = publishers
+
+            // Set publish date if available
+            viewBinding.txvPrevDatePublished.text = bookDetails.publish_date ?: "Unknown Publish Date"
+
+            // Set ISBN (if available) - If isbn_13 is null, use an empty list
+            viewBinding.txvPrevISBN.text = bookDetails.isbn_13?.joinToString(", ") { it } ?: "Unknown ISBN"
+
+            // Set description if available
+            viewBinding.txvPrevSummary.text = bookDetails.description ?: "No description available."
+
+            // Set number of pages
+            viewBinding.txvPrevPageNumber.text = bookDetails.number_of_pages?.toString() ?: "Unknown"
+
+            // Set subjects if available
+            viewBinding.txvPrevSubjects.text = bookDetails.subjects?.joinToString(", ") ?: "No subjects available."
+
+
         } else {
             Log.e(TAG, "No book details found in intent.")
         }
+
+
 
         // Setup back button functionality
         viewBinding.btnPrevBack.setOnClickListener {
@@ -62,4 +76,3 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
         }
     }
 }
-
