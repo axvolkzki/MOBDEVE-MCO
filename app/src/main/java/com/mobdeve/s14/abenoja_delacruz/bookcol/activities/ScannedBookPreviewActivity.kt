@@ -29,6 +29,7 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
 
         // Log book details to see if they're properly passed
         Log.d(TAG, "Received book details: $bookDetails")
+        Log.e(TAG, "Received author names: $authorNames")
 
         if (bookDetails != null) {
             // Set data to UI elements
@@ -123,7 +124,7 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
             val selectedBook = BookResponseModel(
                 key = bookDetails?.key,
                 title = bookDetails?.title,
-                authors = bookDetails?.authors, // Map author keys to Author objects
+                authors = authorNames?.map { Author(it) },
                 covers = bookDetails?.covers,
                 publish_date = bookDetails?.publish_date,
                 number_of_pages = bookDetails?.number_of_pages,
@@ -134,7 +135,7 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
             )
 
             // Pass the author name separately in a different field
-            addBookToLibrary(userId, selectedBook, authorNames?.firstOrNull())
+            addBookToLibrary(userId, selectedBook)
 
             // Go back to the Library Fragment after adding the book
             finish()
@@ -149,7 +150,7 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
         }
     }
 
-    private fun addBookToLibrary(userId: String, book: BookResponseModel, authorName: String?) {
+    private fun addBookToLibrary(userId: String, book: BookResponseModel) {
         val firestore = FirebaseFirestore.getInstance()
 
         if (userId.isNotEmpty()) {
@@ -165,7 +166,7 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
                 FirestoreReferences.COVERS_FIELD to (book.covers ?: listOf<Long>()), // Ensure covers is always saved as a List<Long>
                 FirestoreReferences.TITLE_FIELD to (book.title ?: ""),
                 //FirestoreReferences.AUTHORS_FIELD to (authorName ?: ""), // Use the actual author name
-                FirestoreReferences.AUTHORS_FIELD to (book.authors?.map { Author(it.key) } ?: listOf()), // Save as List<Author>
+                FirestoreReferences.AUTHORS_FIELD to (book.authors?.map { it.key } ?: listOf("")), // Save as List<String>
                 FirestoreReferences.PUBLISHERS_FIELD to (book.publishers ?: listOf("")), // Save as List<String>
                 FirestoreReferences.PUBLISH_DATE_FIELD to (book.publish_date ?: ""),
                 FirestoreReferences.ISBN_13_FIELD to (book.isbn_13 ?: listOf("")), // Save as List<String>
@@ -174,6 +175,8 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
                 FirestoreReferences.SUBJECTS_FIELD to (book.subjects ?: listOf("")) // Save as List<String>
 
             )
+
+            Log.e(TAG, "Book data: $bookData")
 
             // Set the generated book data in Firestore
             newBookRef.set(bookData)

@@ -208,6 +208,8 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
                                     // If all authors have been fetched, proceed with showing the book details
                                     if (authorNames.size == authorKeys.size) {
+                                        Log.d(TAG, "All authors fetched, starting next activity.")
+
                                         // Once all authors are fetched, pass the data to ScannedBookPreviewActivity
                                         val intent = Intent(this@BarcodeScannerActivity, ScannedBookPreviewActivity::class.java)
                                         intent.putExtra("BOOK_DETAILS", bookResponse)
@@ -288,10 +290,13 @@ class BarcodeScannerActivity : AppCompatActivity() {
                     if (authorDetails != null) {
                         // Extract the author's name
                         val authorName = authorDetails.name ?: "Unknown Author"
-                        Log.d(TAG, "Author name: $authorName")
+                        Log.e(TAG, "Author name: $authorName")
 
                         // Invoke the callback with the name
                         callback(authorName)
+
+                        Log.d(TAG, "Callback invoked with author name: $authorName")
+
                     } else {
                         Log.e(TAG, "Author details are null for author key: $authorKey")
                         callback("Unknown Author")

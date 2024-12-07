@@ -90,6 +90,84 @@ class LibraryFragment : Fragment() {
             }
     }
 
+//    @SuppressLint("NotifyDataSetChanged")
+//    private fun fetchBooksDetails(bookIds: List<String>) {
+//        for (bookId in bookIds) {
+//            firestore.collection(FirestoreReferences.BOOK_COLLECTION)
+//                .document(bookId)
+//                .get()
+//                .addOnSuccessListener { document ->
+//                    // Log the raw document data first
+//                    Log.d(TAG, "Raw document data: ${document.data}")
+//
+//                    // Manually handle the publishers field
+//                    val publishersField = document.get(FirestoreReferences.PUBLISHERS_FIELD)
+//                    val publishers: List<String>? = when (publishersField) {
+//                        is String -> listOf(publishersField)
+//                        is List<*> -> publishersField.filterIsInstance<String>()
+//                        else -> null
+//                    }
+//
+//                    // Manually handle the subjects field as it is an array
+//                    val subjectsField = document.get(FirestoreReferences.SUBJECTS_FIELD)
+//                    val subjects: List<String> = when (subjectsField) {
+//                        is String -> listOf(subjectsField) // If it's a single string, wrap it in a list
+//                        is List<*> -> subjectsField.filterIsInstance<String>() // Filter only strings from the list
+//                        else -> listOf() // Default to an empty list
+//                    }
+//
+//                    Log.d(TAG, "Raw subjects field: $subjectsField (${subjectsField?.javaClass?.name})")
+//
+//                    // Handle covers field
+//                    val coversField = document.get(FirestoreReferences.COVERS_FIELD)
+//                    val covers: List<Long>? = when (coversField) {
+//                        is Long -> listOf(coversField)
+//                        is List<*> -> coversField.filterIsInstance<Long>()
+//                        else -> null
+//                    }
+//
+//                    // Handle ISBN-13 field - ensure it's always a List<String>
+//                    val isbn13Field = document.get(FirestoreReferences.ISBN_13_FIELD)
+//                    val isbn13List: List<String>? = when (isbn13Field) {
+//                        is String -> listOf(isbn13Field)
+//                        is List<*> -> isbn13Field.filterIsInstance<String>()
+//                        else -> null
+//                    }
+//
+//                    Log.e(TAG, "Raw ISBN-13 field: $isbn13Field (${isbn13Field?.javaClass?.name})")
+//
+//                    // Handle Author field
+//                    val authorsField = document.get(FirestoreReferences.AUTHORS_FIELD)
+//                    val authors: List<Author> = when (authorsField) {
+//                        is String -> listOf(Author(authorsField))
+//                        is List<*> -> authorsField.map { Author(it.toString()) }
+//                        else -> listOf()
+//                    }
+//
+//                    Log.e(TAG, "[fetch] Raw authors field: $authorsField (${authorsField?.javaClass?.name})")
+//
+////                    val book = document.toObject(BookResponseModel::class.java)
+//                    val book = document.toObject(BookResponseModel::class.java)
+//                        ?.copy(
+//                            publishers = publishers,
+//                            subjects = subjects,
+//                            covers = covers,
+//                            isbn_13 = isbn13List,
+//                            authors = authors
+//                        )
+//                    book?.let {
+//                        booksList.add(it)
+//                        libraryAdapter.notifyDataSetChanged()
+//                    }
+//
+//                    Log.d(TAG, "Parsed book details: $book")
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.e(TAG, "Error getting book details: ", exception)
+//                }
+//        }
+//    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun fetchBooksDetails(bookIds: List<String>) {
         for (bookId in bookIds) {
@@ -97,59 +175,54 @@ class LibraryFragment : Fragment() {
                 .document(bookId)
                 .get()
                 .addOnSuccessListener { document ->
-                    // Log the raw document data first
-                    Log.d(TAG, "Raw document data: ${document.data}")
+                    val data = document.data
+                    if (data != null) {
+                        // Handle each field individually
+                        val key = data["key"] as? String
+                        val title = data["title"] as? String
 
-                    // Manually handle the publishers field
-                    val publishersField = document.get(FirestoreReferences.PUBLISHERS_FIELD)
-                    val publishers: List<String>? = when (publishersField) {
-                        is String -> listOf(publishersField)
-                        is List<*> -> publishersField.filterIsInstance<String>()
-                        else -> null
-                    }
+                        // Handle authors
+                        val authorsRaw = data["authors"] as? List<*>
+                        val authors = authorsRaw?.map { Author(it.toString()) } ?: listOf()
 
-                    // Manually handle the subjects field as it is an array
-                    val subjectsField = document.get(FirestoreReferences.SUBJECTS_FIELD)
-                    val subjects: List<String> = when (subjectsField) {
-                        is String -> listOf(subjectsField) // If it's a single string, wrap it in a list
-                        is List<*> -> subjectsField.filterIsInstance<String>() // Filter only strings from the list
-                        else -> listOf() // Default to an empty list
-                    }
+                        // Handle covers
+                        val coversRaw = data["covers"] as? List<*>
+                        val covers = coversRaw?.mapNotNull { it.toString().toLongOrNull() }
 
-                    Log.d(TAG, "Raw subjects field: $subjectsField (${subjectsField?.javaClass?.name})")
+                        // Handle other fields
+                        val publishDate = data["publish_date"] as? String
+                        val numberOfPages = (data["number_of_pages"] as? Number)?.toInt()
 
-                    // Handle covers field
-                    val coversField = document.get(FirestoreReferences.COVERS_FIELD)
-                    val covers: List<Long>? = when (coversField) {
-                        is Long -> listOf(coversField)
-                        is List<*> -> coversField.filterIsInstance<Long>()
-                        else -> null
-                    }
+                        val publishersRaw = data["publishers"] as? List<*>
+                        val publishers = publishersRaw?.mapNotNull { it.toString() }
 
-                    // Handle ISBN-13 field - ensure it's always a List<String>
-                    val isbn13Field = document.get(FirestoreReferences.ISBN_13_FIELD)
-                    val isbn13List: List<String>? = when (isbn13Field) {
-                        is String -> listOf(isbn13Field)
-                        is List<*> -> isbn13Field.filterIsInstance<String>()
-                        else -> null
-                    }
+                        val isbn13Raw = data["isbn_13"] as? List<*>
+                        val isbn13 = isbn13Raw?.mapNotNull { it.toString() }
 
-                    Log.e(TAG, "Raw ISBN-13 field: $isbn13Field (${isbn13Field?.javaClass?.name})")
+                        val description = data["description"] as? String
 
-//                    val book = document.toObject(BookResponseModel::class.java)
-                    val book = document.toObject(BookResponseModel::class.java)
-                        ?.copy(
-                            publishers = publishers,
-                            subjects = subjects,
+                        val subjectsRaw = data["subjects"] as? List<*>
+                        val subjects = subjectsRaw?.mapNotNull { it.toString() }
+
+                        // Create BookResponseModel manually
+                        val book = BookResponseModel(
+                            key = key,
+                            title = title,
+                            authors = authors,
                             covers = covers,
-                            isbn_13 = isbn13List
+                            publish_date = publishDate,
+                            number_of_pages = numberOfPages,
+                            publishers = publishers,
+                            isbn_13 = isbn13,
+                            description = description,
+                            subjects = subjects
                         )
-                    book?.let {
-                        booksList.add(it)
-                        libraryAdapter.notifyDataSetChanged()
-                    }
 
-                    Log.d(TAG, "Parsed book details: $book")
+                        booksList.add(book)
+                        libraryAdapter.notifyDataSetChanged()
+
+                        Log.d(TAG, "Successfully added book: ${book.title}")
+                    }
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Error getting book details: ", exception)
