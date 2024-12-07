@@ -40,6 +40,8 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
     private val cameraExecutor = Executors.newSingleThreadExecutor()
 
+    private var isPreviewActivityStarted = false // flag to check if the preview activity is started
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -114,7 +116,9 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
         barcodeScanner.process(inputImage)
             .addOnSuccessListener { barcodes ->
-                if (barcodes.isNotEmpty()) {
+                if (barcodes.isNotEmpty() && !isPreviewActivityStarted) {
+                    isPreviewActivityStarted = true // Prevent duplicate starts
+
                     // Collect scanned data
                     val barcodeValues = barcodes.map { it.rawValue ?: "" }
 
@@ -274,6 +278,8 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        isPreviewActivityStarted = false // Reset flag when returning to this activity
+
         if (::processCameraProvider.isInitialized) {
             bindCameraPreview()                                             // Ensure binding happens again
             bindInputAnalyser()                                             // Ensure the input analyzer is bound

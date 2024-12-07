@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">bookcol</string>
+    <string name="app_name">BookCol</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="back">back</string>
