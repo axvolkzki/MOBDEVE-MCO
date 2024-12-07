@@ -192,6 +192,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
                     if (bookResponse != null) {
                         Log.d(TAG, "Book fetched successfully: ${bookResponse.title}")
 
+
                         // Fetch author details for the first author (if exists)
                         val authorKey = bookResponse.authors?.firstOrNull()?.key
                         if (authorKey != null) {
