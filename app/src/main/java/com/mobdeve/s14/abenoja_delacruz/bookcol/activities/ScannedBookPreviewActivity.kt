@@ -19,6 +19,7 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
 
         // Get book details from intent
         val bookDetails = intent.getSerializableExtra("BOOK_DETAILS") as? BookResponseModel
+        val authorName = intent.getStringExtra("AUTHOR_NAME") // Get the author's name passed via intent
 
         // Log book details to see if they're properly passed
         Log.d(TAG, "Received book details: $bookDetails")
@@ -40,9 +41,8 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
             // Set title
             viewBinding.txvPrevTitle.text = bookDetails.title ?: "Unknown Title"
 
-            // Handle authors (if any) - If authors is null, use an empty list
-            val authors = bookDetails.authors?.joinToString(", ") { it.name.orEmpty() } ?: "Unknown Authors"
-            viewBinding.txvPrevAuthor.text = authors
+            // Handle authors - Display the passed author's name
+            viewBinding.txvPrevAuthor.text = authorName ?: "Unknown Author"
 
             // Set publisher if available - If publishers is null, use an empty list
             val publishers = bookDetails.publishers?.joinToString(", ") ?: "Unknown Publisher"
@@ -63,12 +63,9 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
             // Set subjects if available
             viewBinding.txvPrevSubjects.text = bookDetails.subjects?.joinToString(", ") ?: "No subjects available."
 
-
         } else {
             Log.e(TAG, "No book details found in intent.")
         }
-
-
 
         // Setup back button functionality
         viewBinding.btnPrevBack.setOnClickListener {
@@ -76,3 +73,4 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
         }
     }
 }
+

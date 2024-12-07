@@ -21,6 +21,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityScannerBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.models.AuthorDetails
 import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookResponseModel
 import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.RetrofitInstance
 import retrofit2.Call
@@ -174,13 +175,8 @@ class BarcodeScannerActivity : AppCompatActivity() {
         })
     }
 
-
-
-
-
-
     private fun fetchBookDetailsByOLID(olid: String) {
-        val call = RetrofitInstance.api.getBookByOLID(olid) // This hits https://openlibrary.org/books/{olid}.json
+        val call = RetrofitInstance.api.getBookByOLID(olid) // Fetch book by OLID
 
         call.enqueue(object : retrofit2.Callback<BookResponseModel> {
             override fun onResponse(
@@ -192,10 +188,22 @@ class BarcodeScannerActivity : AppCompatActivity() {
                     if (bookResponse != null) {
                         Log.d(TAG, "Book fetched successfully: ${bookResponse.title}")
 
-                        // Pass book details to ScannedBookPreviewActivity
-                        val intent = Intent(this@BarcodeScannerActivity, ScannedBookPreviewActivity::class.java)
-                        intent.putExtra("BOOK_DETAILS", bookResponse)
-                        startActivity(intent)
+                        // Fetch author details for the first author (if exists)
+                        val authorKey = bookResponse.authors?.firstOrNull()?.key
+                        if (authorKey != null) {
+                            Log.e(TAG, "Author key found: $authorKey")
+                            // Fetch the author's name using the author key
+                            fetchAuthorDetails(authorKey) { authorName ->
+                                // Once we fetch the author's name, pass the book details along with the author's name
+                                val intent = Intent(this@BarcodeScannerActivity, ScannedBookPreviewActivity::class.java)
+                                intent.putExtra("BOOK_DETAILS", bookResponse)
+                                intent.putExtra("AUTHOR_NAME", authorName)
+                                startActivity(intent)
+                            }
+                        } else {
+                            // Handle case where author key is not found
+                            Log.e(TAG, "No author key found for book: ${bookResponse.title}")
+                        }
                     } else {
                         Log.e(TAG, "Book details are null for OLID: $olid")
                     }
@@ -209,6 +217,41 @@ class BarcodeScannerActivity : AppCompatActivity() {
             }
         })
     }
+
+
+
+    private fun fetchAuthorDetails(authorKey: String, callback: (String) -> Unit) {
+        val url = "https://openlibrary.org$authorKey.json"
+        Log.e(TAG, "Fetching author details from URL: $url")  // Log the full URL
+        val call = RetrofitInstance.api.getAuthorByAuthorKey(authorKey) // Fetch author details using the key
+
+        call.enqueue(object : retrofit2.Callback<AuthorDetails> {
+            override fun onResponse(
+                call: Call<AuthorDetails>,
+                response: retrofit2.Response<AuthorDetails>
+            ) {
+                if (response.isSuccessful) {
+                    val authorDetails = response.body()
+                    if (authorDetails != null) {
+                        // Call the callback with the author's name
+                        callback(authorDetails.name ?: "Unknown Author")
+                    } else {
+                        Log.e(TAG, "Author details are null for author key: $authorKey")
+                        callback("Unknown Author")
+                    }
+                } else {
+                    Log.e(TAG, "Error fetching author details by author key: ${response.message()}")
+                    callback("Unknown Author")
+                }
+            }
+
+            override fun onFailure(call: Call<AuthorDetails>, t: Throwable) {
+                Log.e(TAG, "Failed to fetch author details by author key: ${t.message}")
+                callback("Unknown Author")
+            }
+        })
+    }
+
 
 
 
