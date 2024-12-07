@@ -35,8 +35,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -78,127 +76,335 @@
                 android:orientation="vertical"
                 app:layout_constraintStart_toEndOf="@+id/imgPrevCover">
 
-                <TextView
-                    android:id="@+id/txvPrevAuthor"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Author Name"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"
-                    />
+                    android:layout_marginBottom="10dp">
 
-                <TextView
-                    android:id="@+id/txvPrevPublisher"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Publisher"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txvPrevAuthor" />
+                    <ImageView
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ic_sharp_ink_pen_24" />
 
-                <TextView
-                    android:id="@+id/txvPrevDatePublished"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Date Published"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintTop_toBottomOf="@+id/txvPrevPublisher"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    <!-- Contact Information -->
+                    <TextView
+                        android:id="@+id/txvPrevAuthor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Author Name"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        />
 
-                <TextView
-                    android:id="@+id/txvPrevISBN"
-                    android:layout_width="wrap_content"
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ISBN Number"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintTop_toBottomOf="@+id/txvPrevDatePublished"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ic_baseline_newspaper_24" />
+
+                    <!-- Contact Information -->
+                    <TextView
+                        android:id="@+id/txvPrevPublisher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Publisher"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ic_baseline_calendar_month_24" />
+
+                    <!-- Contact Information -->
+                    <TextView
+                        android:id="@+id/txvPrevDatePublished"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date Published"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/ic_baseline_qr_code_2_24" />
+
+                    <!-- Contact Information -->
+                    <TextView
+                        android:id="@+id/txvPrevISBN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ISBN Number"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txvPrevSummary"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/txvSummaryLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Summary of the book goes here."
-            android:layout_marginTop="8dp"
-            android:padding="16dp"
+            android:paddingStart="20dp"
             app:layout_constraintTop_toBottomOf="@+id/bookDetailsLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/txvPrevPageNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Page Number"
-            android:textSize="14sp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/txvPrevSummary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/txvPrevSubjects"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Subjects"
-            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txvPrevPageNumber" />
+            app:layout_constraintBottom_toTopOf="@+id/txvPrevSummaryLayout"
+            tools:ignore="RtlSymmetry">
 
-        <TextView
-            android:id="@+id/txvPrevLanguage"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_baseline_notes_24" />
+
+            <!-- Contact Information -->
+            <TextView
+                android:id="@+id/txvSummary"
+                android:layout_width="wrap_content"
+                android:layout_height="20sp"
+                android:text="Summary"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/txvPrevSummaryLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Language"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/txvPrevSubjects"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/box_background"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/txvSummaryLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:id="@+id/txvPrevGenres"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/txvPrevSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Summary of the book goes here."
+                android:padding="16dp"
+                android:textColor="@android:color/black" /> <!-- Adjust text color as needed -->
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/txvPrevPageNumberLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Genres"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/txvPrevLanguage"
+            android:gravity="center"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingStart="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/txvPrevSummaryLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Page Number:"
+                android:textStyle="bold"/>
+
+            <!-- Contact Information -->
+            <TextView
+                android:id="@+id/txvPrevPageNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="end"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:text="300"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/txvPrevPageNumberLayoutEnd"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/txvPrevPageNumberLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/txvPrevSubjectsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingStart="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/txvPrevPageNumberLayoutEnd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject:"
+                android:textStyle="bold"/>
+
+            <!-- Contact Information -->
+            <TextView
+                android:id="@+id/txvPrevSubjects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="end"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:text="Subject"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/txvPrevSubjectsLayoutEnd"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/txvPrevSubjectsLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/txvPrevLanguageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingStart="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/txvPrevSubjectsLayoutEnd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Language:"
+                android:textStyle="bold"/>
+
+            <!-- Contact Information -->
+            <TextView
+                android:id="@+id/txvPrevLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="end"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:text="en"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/txvPrevLanguageLayoutEnd"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/txvPrevLanguageLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/txvPrevGenresLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingStart="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/txvPrevLanguageLayoutEnd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Genre:"
+                android:textStyle="bold"/>
+
+            <!-- Contact Information -->
+            <TextView
+                android:id="@+id/txvPrevGenres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="end"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:text="mystery"
+                android:background="@null" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/shadow_background"
+        android:layout_gravity="bottom">
 
         <Button
             android:id="@+id/btnPrevAddToLibrary"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_weight="1"
             android:text="Add to Library"
-            app:layout_constraintEnd_toStartOf="@+id/txvPrevGenres"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txvPrevGenres" />
+            android:textColor="@android:color/white"
+            android:background="@color/lightPrimary"
+            android:layout_marginEnd="1dp"/>
 
         <Button
             android:id="@+id/btnPrevAddToWishlist"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:layout_marginStart="1dp"
             android:text="Add to Wishlist"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/txvPrevGenres"
-            app:layout_constraintTop_toBottomOf="@+id/txvPrevGenres" />
+            android:textColor="@android:color/white"
+            android:background="@color/lightPrimary" />
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
