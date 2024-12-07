@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityScannedBookPreviewBinding
-import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookModel
+import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookResponseModel
 
 class ScannedBookPreviewActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityScannedBookPreviewBinding
@@ -18,25 +18,32 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         // Get book details from intent
-        val bookDetails = intent.getSerializableExtra("BOOK_DETAILS") as? BookModel
+        val bookDetails = intent.getSerializableExtra("BOOK_DETAILS") as? BookResponseModel
 
         // Log book details to see if they're properly passed
         Log.d(TAG, "Received book details: $bookDetails")
 
         if (bookDetails != null) {
             // Set data to UI elements
-            viewBinding.txvPrevTitle.text = bookDetails.title
-            viewBinding.txvPrevISBN.text = bookDetails.isbn
+            viewBinding.txvPrevTitle.text = bookDetails.title ?: "Unknown Title"
+            viewBinding.txvPrevISBN.text = bookDetails.isbn.joinToString(", ") { it }
 
             // Handle authors (if any)
-            val authors = bookDetails.authors?.joinToString { it.name } ?: "Unknown"
+            val authors = bookDetails.authors?.joinToString(", ") { it.name.orEmpty() } ?: "Unknown Authors"
             viewBinding.txvPrevAuthor.text = authors
 
             // Set publisher if available
-            viewBinding.txvPrevPublisher.text = bookDetails.publishDate ?: "Unknown"
+            val publishers = bookDetails.publishers?.joinToString(", ") { it.name.orEmpty() } ?: "Unknown Publisher"
+            viewBinding.txvPrevPublisher.text = publishers
+
+            // Set publish date if available
+            viewBinding.txvPrevDatePublished.text = bookDetails.publish_date ?: "Unknown Publish Date"
+
+            // Set number of pages
+            viewBinding.txvPrevPageNumber.text = bookDetails.number_of_pages?.toString() ?: "Unknown"
 
             // Set cover image (if available)
-            val coverUrl = bookDetails.cover?.medium
+            val coverUrl = bookDetails.cover?.get("medium") // Get medium-sized cover image URL
             if (!coverUrl.isNullOrEmpty()) {
                 Glide.with(this)
                     .load(coverUrl)
@@ -55,3 +62,4 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
         }
     }
 }
+

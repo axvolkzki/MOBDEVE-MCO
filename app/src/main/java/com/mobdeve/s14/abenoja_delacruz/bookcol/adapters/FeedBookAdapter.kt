@@ -3,10 +3,10 @@ package com.mobdeve.s14.abenoja_delacruz.bookcol.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookModel
+import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookResponseModel
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ItemFeedBookLayoutBinding
 
-class FeedBookAdapter(private val data: List<BookModel>) : RecyclerView.Adapter<FeedBookAdapter.FeedBookViewHolder>() {
+class FeedBookAdapter(private val data: List<BookResponseModel>) : RecyclerView.Adapter<FeedBookAdapter.FeedBookViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedBookViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -23,7 +23,7 @@ class FeedBookAdapter(private val data: List<BookModel>) : RecyclerView.Adapter<
     }
 
     class FeedBookViewHolder(private val viewBinding: ItemFeedBookLayoutBinding) : RecyclerView.ViewHolder(viewBinding.root) {
-        fun bind(book: BookModel) {
+        fun bind(book: BookResponseModel) {
             viewBinding.bookTitleTextView.text = book.title
         }
     }

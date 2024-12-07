@@ -3,7 +3,6 @@ package com.mobdeve.s14.abenoja_delacruz.bookcol.activities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.nfc.Tag
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,16 +15,13 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.google.common.util.concurrent.ListenableFuture
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import com.mobdeve.s14.abenoja_delacruz.bookcol.api.OpenLibraryApiService
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityScannerBinding
-import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookModel
+import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookResponseModel
 import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.RetrofitInstance
 import retrofit2.Call
 import java.util.concurrent.Executors
@@ -131,7 +127,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
                     // check if barcode is not empty
                     if (barcodeValues.isNotEmpty()) {
                         // Fetch book data from OpenLibrary API
-                        fetchBookDetails(barcodeValues[0])
+                        fetchBookDetailsByISBN(barcodeValues[0])
                     } else {
                         Log.e(TAG, "Barcode value is empty.")
                     }
@@ -145,33 +141,77 @@ class BarcodeScannerActivity : AppCompatActivity() {
             }
     }
 
-    private fun fetchBookDetails(isbn: String) {
+    private fun fetchBookDetailsByISBN(isbn: String) {
         val call = RetrofitInstance.api.getBookByISBN(isbn)
 
-        call.enqueue(object : retrofit2.Callback<BookModel> {
-            override fun onResponse(call: Call<BookModel>, response: retrofit2.Response<BookModel>) {
+        call.enqueue(object : retrofit2.Callback<BookResponseModel> {
+            override fun onResponse(
+                call: Call<BookResponseModel>,
+                response: retrofit2.Response<BookResponseModel>
+            ) {
                 if (response.isSuccessful) {
                     val bookResponse = response.body()
                     if (bookResponse != null) {
-                        Log.d(TAG, "[onResponse] Book data fetched successfully: ${bookResponse.title} by ${bookResponse.authors?.joinToString { it.name }}")
-
-                        // Pass the book details to ScannedBookPreviewActivity
-                        val intent = Intent(this@BarcodeScannerActivity, ScannedBookPreviewActivity::class.java)
-                        intent.putExtra("BOOK_DETAILS", bookResponse)
-                        startActivity(intent)
+                        Log.d(TAG, "Book fetched successfully: ${bookResponse.title}")
+                        // Continue processing the book details
+                        val olid = bookResponse.key?.removePrefix("/books/") // Extract OLID
+                        if (olid != null) {
+                            fetchBookDetailsByOLID(olid)
+                        } else {
+                            Log.e(TAG, "OLID not found for ISBN: $isbn")
+                        }
                     } else {
-                        Log.e(TAG, "Book response is null")
+                        Log.e(TAG, "Book details are null for ISBN: $isbn")
                     }
                 } else {
                     Log.e(TAG, "Error fetching book data: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: retrofit2.Call<BookModel>, t: Throwable) {
+            override fun onFailure(call: Call<BookResponseModel>, t: Throwable) {
                 Log.e(TAG, "Error fetching book data: ${t.message}")
             }
         })
     }
+
+
+
+
+    private fun fetchBookDetailsByOLID(olid: String) {
+        val call = RetrofitInstance.api.getBookByOLID(olid)
+
+        call.enqueue(object : retrofit2.Callback<BookResponseModel> {
+            override fun onResponse(
+                call: Call<BookResponseModel>,
+                response: retrofit2.Response<BookResponseModel>
+            ) {
+                if (response.isSuccessful) {
+                    val bookResponse = response.body()
+                    if (bookResponse != null) {
+                        Log.d(TAG, "Book fetched successfully: ${bookResponse.title}")
+                        Log.d(TAG, "Authors: ${bookResponse.authors?.joinToString { it.name.orEmpty() }}")
+                        Log.d(TAG, "Publisher: ${bookResponse.publishers?.joinToString { it.name.orEmpty() }}")
+
+                        // Pass the book details to ScannedBookPreviewActivity
+                        val intent = Intent(this@BarcodeScannerActivity, ScannedBookPreviewActivity::class.java)
+                        intent.putExtra("BOOK_DETAILS", bookResponse)
+                        startActivity(intent)
+                    } else {
+                        Log.e(TAG, "Book details are null for OLID: $olid")
+                    }
+                } else {
+                    Log.e(TAG, "Error fetching book details: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookResponseModel>, t: Throwable) {
+                Log.e(TAG, "Error fetching book details: ${t.message}")
+            }
+        })
+    }
+
+
+
 
 
 
