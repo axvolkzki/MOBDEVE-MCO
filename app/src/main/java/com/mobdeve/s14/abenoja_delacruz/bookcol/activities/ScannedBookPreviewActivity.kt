@@ -70,7 +70,9 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
             viewBinding.txvPrevTitle.text = bookDetails.title ?: "Unknown Title"
 
             // Handle authors - Display the passed author's name
-            viewBinding.txvPrevAuthor.text = authorName ?: "Unknown Author"
+            //viewBinding.txvPrevAuthor.text = authorName ?: "Unknown Author"
+            val authors = bookDetails.authors?.map { it.key }?.joinToString(", ") ?: "Unknown Author"
+            viewBinding.txvPrevAuthor.text = authors
 
             // Set publisher if available - If publishers is null, use an empty list
             val publishers = bookDetails.publishers?.joinToString(", ") ?: "Unknown Publisher"
@@ -148,21 +150,15 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
             // Generate a new unique bookId for the new book entry
             val bookId = newBookRef.id
 
-//            val isbn13List = when (val isbn = book.isbn_13) {
-//                null -> listOf<String>()
-//                is List<*> -> isbn.filterIsInstance<String>()
-//                else -> listOf(isbn.toString())
-//            }
-
             // Set the book data (including the generated bookId) for the new book entry
             val bookData = hashMapOf(
                 FirestoreReferences.BOOKID_FIELD to bookId,
                 FirestoreReferences.COVERS_FIELD to (book.covers ?: listOf<Long>()), // Ensure covers is always saved as a List<Long>
                 FirestoreReferences.TITLE_FIELD to (book.title ?: ""),
-                FirestoreReferences.AUTHORS_FIELD to (authorName ?: ""), // Use the actual author name
+                //FirestoreReferences.AUTHORS_FIELD to (authorName ?: ""), // Use the actual author name
+                FirestoreReferences.AUTHORS_FIELD to (book.authors?.map { it.key } ?: listOf("")), // Save as List<String>
                 FirestoreReferences.PUBLISHERS_FIELD to (book.publishers ?: listOf("")), // Save as List<String>
                 FirestoreReferences.PUBLISH_DATE_FIELD to (book.publish_date ?: ""),
-//                FirestoreReferences.ISBN_13_FIELD to isbn13List, // Save as List<String>
                 FirestoreReferences.ISBN_13_FIELD to (book.isbn_13 ?: listOf("")), // Save as List<String>
                 FirestoreReferences.DESCRIPTION_FIELD to (book.description ?: ""),
                 FirestoreReferences.NUMBER_OF_PAGES_FIELD to (book.number_of_pages ?: 0),

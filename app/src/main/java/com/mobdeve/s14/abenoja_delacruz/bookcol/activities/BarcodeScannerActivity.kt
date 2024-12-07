@@ -238,8 +238,11 @@ class BarcodeScannerActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val authorDetails = response.body()
                     if (authorDetails != null) {
+                        Log.d(TAG, "Author fetched successfully: ${authorDetails.name}")
+
                         // Call the callback with the author's name
                         callback(authorDetails.name ?: "Unknown Author")
+
                     } else {
                         Log.e(TAG, "Author details are null for author key: $authorKey")
                         callback("Unknown Author")
@@ -256,17 +259,6 @@ class BarcodeScannerActivity : AppCompatActivity() {
             }
         })
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     // Lifecycle methods
@@ -299,9 +291,6 @@ class BarcodeScannerActivity : AppCompatActivity() {
         }
     }
 
-
-
-
     override fun onDestroy() {
         super.onDestroy()
         if (::processCameraProvider.isInitialized) {
@@ -309,7 +298,6 @@ class BarcodeScannerActivity : AppCompatActivity() {
         }
         cameraExecutor.shutdown()
     }
-
 
     companion object {
         private val TAG = BarcodeScannerActivity::class.simpleName

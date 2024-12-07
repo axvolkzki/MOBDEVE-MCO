@@ -1,6 +1,5 @@
 package com.mobdeve.s14.abenoja_delacruz.bookcol.models
 
-import com.google.firebase.firestore.PropertyName
 import java.io.Serializable
 
 data class BookResponseModel(
