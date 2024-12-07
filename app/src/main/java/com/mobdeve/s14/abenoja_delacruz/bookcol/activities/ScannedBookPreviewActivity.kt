@@ -143,9 +143,26 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
 
         // Setup add to wishlist button functionality
         viewBinding.btnPrevAddToWishlist.setOnClickListener {
-            // Add book to user's wishlist
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
-            // Book details should be passed to the next activity
+            // Create the selected book, passing the actual author's name
+            val selectedBook = BookResponseModel(
+                key = bookDetails?.key,
+                title = bookDetails?.title,
+                authors = authorNames?.map { Author(it) },
+                covers = bookDetails?.covers,
+                publish_date = bookDetails?.publish_date,
+                number_of_pages = bookDetails?.number_of_pages,
+                publishers = bookDetails?.publishers,
+                isbn_13 = bookDetails?.isbn_13,
+                description = bookDetails?.description,
+                subjects = bookDetails?.subjects
+            )
+
+            addBookToWishlist(userId, selectedBook)
+
+            // Go back to the Wishlist Fragment after adding the book
+            finish()
 
         }
     }
@@ -200,6 +217,74 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
                         .addOnFailureListener { exception ->
                             Log.e(TAG, "Error adding book to library: ${exception.message}")
                         }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TAG, "Error adding book details: ${exception.message}")
+                }
+        } else {
+            Log.e(TAG, "Invalid user ID.")
+        }
+    }
+
+    private fun addBookToWishlist(userId: String, book: BookResponseModel) {
+        val firestore = FirebaseFirestore.getInstance()
+
+        if (userId.isNotEmpty()) {
+            // Create a new document with an auto-generated bookId
+            val newBookRef = firestore.collection(FirestoreReferences.BOOK_COLLECTION).document()
+
+            // Generate a new unique bookId for the new book entry
+            val bookId = newBookRef.id
+
+            // Set the book data (including the generated bookId) for the new book entry
+            val bookData = hashMapOf(
+                FirestoreReferences.BOOKID_FIELD to bookId,
+                FirestoreReferences.COVERS_FIELD to (book.covers
+                    ?: listOf<Long>()), // Ensure covers is always saved as a List<Long>
+                FirestoreReferences.TITLE_FIELD to (book.title ?: ""),
+                //FirestoreReferences.AUTHORS_FIELD to (authorName ?: ""), // Use the actual author name
+                FirestoreReferences.AUTHORS_FIELD to (book.authors?.map { it.key }
+                    ?: listOf("")), // Save as List<String>
+                FirestoreReferences.PUBLISHERS_FIELD to (book.publishers
+                    ?: listOf("")), // Save as List<String>
+                FirestoreReferences.PUBLISH_DATE_FIELD to (book.publish_date ?: ""),
+                FirestoreReferences.ISBN_13_FIELD to (book.isbn_13
+                    ?: listOf("")), // Save as List<String>
+                FirestoreReferences.DESCRIPTION_FIELD to (book.description ?: ""),
+                FirestoreReferences.NUMBER_OF_PAGES_FIELD to (book.number_of_pages ?: 0),
+                FirestoreReferences.SUBJECTS_FIELD to (book.subjects
+                    ?: listOf("")) // Save as List<String>
+
+            )
+
+            Log.e(TAG, "Book data: $bookData")
+
+            // Set the generated book data in Firestore
+            newBookRef.set(bookData)
+                .addOnSuccessListener {
+                    // Successfully added book details
+                    Log.d(TAG, "Book added with ID: $bookId")
+
+                    // Now, create the wishlist entry linking the user and the book
+                    val wishlistEntry = hashMapOf(
+                        "userId" to userId,
+                        "bookId" to bookId,
+                        "dateAdded" to com.google.firebase.firestore.FieldValue.serverTimestamp()
+                    )
+
+                    // Add the wishlist entry to the Wishlists collection
+                    firestore.collection(FirestoreReferences.WISHLIST_COLLECTION)
+                        .add(wishlistEntry)
+                        .addOnSuccessListener { documentReference ->
+                            Log.d(
+                                TAG,
+                                "Book added to user's wishlist with entry ID: ${documentReference.id}"
+                            )
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.e(TAG, "Error adding book to wishlist: ${exception.message}")
+                        }
+
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Error adding book details: ${exception.message}")

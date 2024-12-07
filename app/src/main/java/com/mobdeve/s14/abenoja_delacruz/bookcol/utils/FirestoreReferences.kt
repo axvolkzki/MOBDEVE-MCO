@@ -6,6 +6,7 @@ object FirestoreReferences {
     const val USER_COLLECTION = "Users"
     const val BOOK_COLLECTION = "Books"
     const val LIBRARY_COLLECTION = "Libraries"
+    const val WISHLIST_COLLECTION = "Wishlists"
 
     // User fields
     const val USERID_FIELD = "userId"
@@ -28,5 +29,10 @@ object FirestoreReferences {
     // Library fields
     const val LIBRARY_USERID_FIELD = "userId"
     const val LIBRARY_BOOKID_FIELD = "bookId"
-    const val DATE_ADDED_FIELD = "dateAdded"
+    const val LIBRARY_DATE_ADDED_FIELD = "dateAdded"
+
+    // Wishlist fields
+    const val WISHLIST_USERID_FIELD = "userId"
+    const val WISHLIST_BOOKID_FIELD = "bookId"
+    const val WISHLIST_DATE_ADDED_FIELD = "dateAdded"
 }
