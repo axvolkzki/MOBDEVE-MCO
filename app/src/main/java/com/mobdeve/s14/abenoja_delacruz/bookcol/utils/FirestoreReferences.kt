@@ -14,16 +14,16 @@ object FirestoreReferences {
 
     // Book fields
     const val BOOKID_FIELD = "bookId"
-    const val COVER_FIELD = "cover"
+    const val COVERS_FIELD = "covers"
     const val TITLE_FIELD = "title"
-    const val AUTHOR_FIELD = "author"
-    const val PUBLISHER_FIELD = "publisher"
-    const val PUBLISH_DATE_FIELD = "publishDate"
-    const val ISBN_FIELD = "isbn"
-    const val SUMMARY_FIELD = "summary"
-    const val PAGE_COUNT_FIELD = "pageCount"
+    const val AUTHORS_FIELD = "authors"
+    const val PUBLISHERS_FIELD = "publishers"
+    const val PUBLISH_DATE_FIELD = "publish_date"
+    const val ISBN_13_FIELD = "isbn_13"
+    const val DESCRIPTION_FIELD = "desciption"
+    const val NUMBER_OF_PAGES_FIELD = "number_of_pages"
     const val LANGUAGE_FIELD = "language"
-    const val GENRE_FIELD = "genre"
+    const val SUBJECTS_FIELD = "subjects"
 
     // Library fields
     const val LIBRARY_USERID_FIELD = "userId"

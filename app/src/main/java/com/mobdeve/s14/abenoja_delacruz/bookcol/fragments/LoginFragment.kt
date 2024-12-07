@@ -15,6 +15,7 @@ import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.BaseActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentLoginBinding
 import com.mobdeve.s14.abenoja_delacruz.bookcol.models.UserModel
 import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.FirestoreReferences
+import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.SessionManager
 import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.toast
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,11 +37,16 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val viewBinding get() = _binding!!
 
+    private lateinit var sessionManager: SessionManager
+
     // DB Schema
     private lateinit var mAuth: FirebaseAuth        // Firebase Authentication
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize SessionManager
+        sessionManager = SessionManager(requireContext())
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance()
@@ -130,6 +136,8 @@ class LoginFragment : Fragment() {
             .addOnFailureListener { exception ->
                 requireContext().toast("Error: ${exception.message}")
             }
+
+
     }
 
     private fun loginUserWithEmail(email: String, password: String) {
@@ -140,6 +148,8 @@ class LoginFragment : Fragment() {
 
                     // Fetch UserModel for additional data if needed
                     fetchUserData(userId)
+
+                    sessionManager.createLoginSession(userId, email)
 
                     requireContext().toast("Login successful!")
 

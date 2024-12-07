@@ -3,13 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_profile_wallpaper"
     tools:context="com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingTop="60dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        >
 
         <!-- Profile Picture -->
         <ImageView
@@ -18,47 +22,121 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
+            android:layout_marginBottom="35dp"
             android:src="@drawable/ic_profile_placeholder"
-            android:background="@drawable/circle_background" />
+            android:background="@drawable/circle_background"
+            android:clipToOutline="true"/>
 
-        <!-- Username -->
-        <TextView
-            android:id="@+id/usernameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Username"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp" />
-
-        <!-- Email -->
-        <TextView
-            android:id="@+id/emailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="user@example.com"
-            android:textSize="16sp"
-            android:textColor="@android:color/darker_gray"
-            android:layout_marginTop="4dp" />
-
-        <!-- Bio -->
-        <TextView
-            android:id="@+id/bioTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This is a brief bio about the user."
-            android:textSize="14sp"
-            android:layout_marginTop="16dp" />
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_baseline_person_outline_24" />
+
+            <!-- Username -->
+            <TextView
+                android:id="@+id/usernameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:text="Username"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_baseline_mail_outline_24" />
+
+            <!-- Email -->
+            <TextView
+                android:id="@+id/emailTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:text="user@example.com"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/ic_baseline_call_24" />
+
+            <!-- Contact Information -->
+            <TextView
+                android:id="@+id/txvNumberTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:textSize="15sp"
+                android:text="+63 123 456 7890"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
 
         <!-- Button to Edit Profile -->
         <Button
-            android:id="@+id/editProfileButton"
+            android:id="@+id/btnProfileLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Profile"
-            android:layout_marginTop="24dp" />
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="50dp"
+            android:text="Logout"
+            android:textColor="@color/lightActive" />
 
     </LinearLayout>
 
