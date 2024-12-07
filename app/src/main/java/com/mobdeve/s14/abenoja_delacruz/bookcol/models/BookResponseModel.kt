@@ -16,12 +16,12 @@ data class BookResponseModel(
 ) : Serializable
 
 data class Author(
-    val key: String?   // The author's OpenLibrary key (e.g., "/authors/OL498120A")
+    val key: String? = null   // The author's OpenLibrary key (e.g., "/authors/OL498120A")
 ) : Serializable
 
 // This model will represent the author details from /authors/{authorKey}.json
 data class AuthorDetails(
-    val name: String?
+    val name: String? = null
 ) : Serializable
 
 

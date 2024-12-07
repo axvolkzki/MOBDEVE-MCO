@@ -136,22 +136,13 @@ class LibraryFragment : Fragment() {
 
                     Log.e(TAG, "Raw ISBN-13 field: $isbn13Field (${isbn13Field?.javaClass?.name})")
 
-                    // Handle Authors
-                    val authorsField = document.get(FirestoreReferences.AUTHORS_FIELD)
-                    val authors: List<Author>? = when (authorsField) {
-                        is String -> listOf(Author(authorsField))  // If it's a single string, wrap it in a List<Author>
-                        is List<*> -> authorsField.filterIsInstance<String>().map { Author(it) }  // If it's a List<String>, convert each string to an Author
-                        else -> null  // If it's neither, return null or empty list
-                    }
-
 //                    val book = document.toObject(BookResponseModel::class.java)
                     val book = document.toObject(BookResponseModel::class.java)
                         ?.copy(
                             publishers = publishers,
                             subjects = subjects,
                             covers = covers,
-                            isbn_13 = isbn13List,
-                            authors = authors,
+                            isbn_13 = isbn13List
                         )
                     book?.let {
                         booksList.add(it)

@@ -24,7 +24,8 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
 
         // Get book details from intent
         val bookDetails = intent.getSerializableExtra("BOOK_DETAILS") as? BookResponseModel
-        val authorName = intent.getStringExtra("AUTHOR_NAME") // Get the author's name passed via intent
+        val authorNames: List<String>? = intent.getStringArrayListExtra("AUTHOR_NAMES")
+
 
         // Log book details to see if they're properly passed
         Log.d(TAG, "Received book details: $bookDetails")
@@ -70,9 +71,15 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
             viewBinding.txvPrevTitle.text = bookDetails.title ?: "Unknown Title"
 
             // Handle authors - Display the passed author's name
-            //viewBinding.txvPrevAuthor.text = authorName ?: "Unknown Author"
-            val authors = bookDetails.authors?.map { it.key }?.joinToString(", ") ?: "Unknown Author"
-            viewBinding.txvPrevAuthor.text = authors
+            var authorNameList = ""
+            if (authorNames != null) {
+                authorNameList = authorNames.joinToString(", ")
+            } else {
+                authorNameList = "Unknown Author"
+            }
+            viewBinding.txvPrevAuthor.text = authorNameList
+
+
 
             // Set publisher if available - If publishers is null, use an empty list
             val publishers = bookDetails.publishers?.joinToString(", ") ?: "Unknown Publisher"
@@ -83,7 +90,9 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
 
             // Set ISBN (if available) - If isbn_13 is null, use an empty list
 //            viewBinding.txvPrevISBN.text = bookDetails.isbn_13?.joinToString(", ") { it } ?: "Unknown ISBN"
-            val isbn13s = bookDetails?.isbn_13?.joinToString(", ") ?: "Unknown ISBN"
+//            val isbn13s = bookDetails?.isbn_13?.joinToString(", ") ?: "Unknown ISBN"
+//            viewBinding.txvPrevISBN.text = isbn13s
+            val isbn13s = bookDetails?.isbn_13?.takeIf { it.isNotEmpty() }?.joinToString(", ") ?: "Unknown ISBN"
             viewBinding.txvPrevISBN.text = isbn13s
 
             // Set description if available
@@ -114,7 +123,7 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
             val selectedBook = BookResponseModel(
                 key = bookDetails?.key,
                 title = bookDetails?.title,
-                authors = bookDetails?.authors?.map { Author(key = it.key) }, // Map author keys to Author objects
+                authors = bookDetails?.authors, // Map author keys to Author objects
                 covers = bookDetails?.covers,
                 publish_date = bookDetails?.publish_date,
                 number_of_pages = bookDetails?.number_of_pages,
@@ -125,7 +134,7 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
             )
 
             // Pass the author name separately in a different field
-            addBookToLibrary(userId, selectedBook, authorName)
+            addBookToLibrary(userId, selectedBook, authorNames?.firstOrNull())
 
             // Go back to the Library Fragment after adding the book
             finish()
@@ -156,7 +165,7 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
                 FirestoreReferences.COVERS_FIELD to (book.covers ?: listOf<Long>()), // Ensure covers is always saved as a List<Long>
                 FirestoreReferences.TITLE_FIELD to (book.title ?: ""),
                 //FirestoreReferences.AUTHORS_FIELD to (authorName ?: ""), // Use the actual author name
-                FirestoreReferences.AUTHORS_FIELD to (book.authors?.map { it.key } ?: listOf("")), // Save as List<String>
+                FirestoreReferences.AUTHORS_FIELD to (book.authors?.map { Author(it.key) } ?: listOf()), // Save as List<Author>
                 FirestoreReferences.PUBLISHERS_FIELD to (book.publishers ?: listOf("")), // Save as List<String>
                 FirestoreReferences.PUBLISH_DATE_FIELD to (book.publish_date ?: ""),
                 FirestoreReferences.ISBN_13_FIELD to (book.isbn_13 ?: listOf("")), // Save as List<String>
