@@ -30,6 +30,9 @@ object FirestoreReferences {
     const val LIBRARY_USERID_FIELD = "userId"
     const val LIBRARY_BOOKID_FIELD = "bookId"
     const val LIBRARY_DATE_ADDED_FIELD = "dateAdded"
+    const val LIBRARY_IS_LENT_FIELD = "isLent"
+    const val LIBRARY_DATE_LENT_FIELD = "dateLent"
+    const val LIBRARY_LENT_TO_FIELD = "lentTo"
 
     // Wishlist fields
     const val WISHLIST_USERID_FIELD = "userId"

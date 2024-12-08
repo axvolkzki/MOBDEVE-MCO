@@ -326,8 +326,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        cameraExecutor.execute { bindCameraPreview() }
-        isPreviewActivityStarted = false // Reset flag when returning to this activity
+//        cameraExecutor.execute { bindCameraPreview() }         isPreviewActivityStarted = false // Reset flag when returning to this activity
 
         if (::processCameraProvider.isInitialized) {
             bindCameraPreview()                                             // Ensure binding happens again

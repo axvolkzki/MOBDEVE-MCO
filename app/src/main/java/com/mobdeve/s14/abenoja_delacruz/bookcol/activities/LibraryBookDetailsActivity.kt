@@ -3,16 +3,24 @@ package com.mobdeve.s14.abenoja_delacruz.bookcol.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityLibraryBookDetailsBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.SessionManager
 
 class LibraryBookDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLibraryBookDetailsBinding
+
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLibraryBookDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance()
+
 
         // Retrieve the book details from the intent
         val title = intent.getStringExtra("KEY_TITLE")
@@ -39,8 +47,7 @@ class LibraryBookDetailsActivity : AppCompatActivity() {
         if (!coverImage.isNullOrEmpty()) {
             val coverUrl = "https://covers.openlibrary.org/b/id/${coverImage?.get(0)}-L.jpg"
             Glide.with(this).load(coverUrl).into(binding.imgLibDeetsCover)
-        }
-        else {
+        } else {
             binding.imgLibDeetsCover.setImageResource(R.drawable.ic_book_placeholder)
         }
 

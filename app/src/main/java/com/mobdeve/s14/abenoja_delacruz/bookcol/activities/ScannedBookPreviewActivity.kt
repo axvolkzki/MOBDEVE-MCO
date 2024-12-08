@@ -167,64 +167,122 @@ class ScannedBookPreviewActivity : AppCompatActivity() {
         }
     }
 
-    private fun addBookToLibrary(userId: String, book: BookResponseModel) {
-        val firestore = FirebaseFirestore.getInstance()
+//    private fun addBookToLibrary(userId: String, book: BookResponseModel) {
+//        val firestore = FirebaseFirestore.getInstance()
+//
+//        if (userId.isNotEmpty()) {
+//            // Create a new document with an auto-generated bookId
+//            val newBookRef = firestore.collection(FirestoreReferences.BOOK_COLLECTION).document()
+//
+//            // Generate a new unique bookId for the new book entry
+//            val bookId = newBookRef.id
+//
+//            // Set the book data (including the generated bookId) for the new book entry
+//            val bookData = hashMapOf(
+//                FirestoreReferences.BOOKID_FIELD to bookId,
+//                FirestoreReferences.COVERS_FIELD to (book.covers ?: listOf<Long>()), // Ensure covers is always saved as a List<Long>
+//                FirestoreReferences.TITLE_FIELD to (book.title ?: ""),
+//                //FirestoreReferences.AUTHORS_FIELD to (authorName ?: ""), // Use the actual author name
+//                FirestoreReferences.AUTHORS_FIELD to (book.authors?.map { it.key } ?: listOf("")), // Save as List<String>
+//                FirestoreReferences.PUBLISHERS_FIELD to (book.publishers ?: listOf("")), // Save as List<String>
+//                FirestoreReferences.PUBLISH_DATE_FIELD to (book.publish_date ?: ""),
+//                FirestoreReferences.ISBN_13_FIELD to (book.isbn_13 ?: listOf("")), // Save as List<String>
+//                FirestoreReferences.DESCRIPTION_FIELD to (book.description ?: ""),
+//                FirestoreReferences.NUMBER_OF_PAGES_FIELD to (book.number_of_pages ?: 0),
+//                FirestoreReferences.SUBJECTS_FIELD to (book.subjects ?: listOf("")) // Save as List<String>
+//
+//            )
+//
+//            Log.e(TAG, "Book data: $bookData")
+//
+//            // Set the generated book data in Firestore
+//            newBookRef.set(bookData)
+//                .addOnSuccessListener {
+//                    // Successfully added book details
+//                    Log.d(TAG, "Book added with ID: $bookId")
+//
+//                    // Now, create the library entry linking the user and the book
+//                    val libraryEntry = hashMapOf(
+//                        "userId" to userId,
+//                        "bookId" to bookId,
+//                        "dateAdded" to com.google.firebase.firestore.FieldValue.serverTimestamp()
+//                    )
+//
+//                    // Add the library entry to the Libraries collection
+//                    firestore.collection(FirestoreReferences.LIBRARY_COLLECTION)
+//                        .add(libraryEntry)
+//                        .addOnSuccessListener { documentReference ->
+//                            Log.d(TAG, "Book added to user's library with entry ID: ${documentReference.id}")
+//                        }
+//                        .addOnFailureListener { exception ->
+//                            Log.e(TAG, "Error adding book to library: ${exception.message}")
+//                        }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.e(TAG, "Error adding book details: ${exception.message}")
+//                }
+//        } else {
+//            Log.e(TAG, "Invalid user ID.")
+//        }
+//    }
+private fun addBookToLibrary(userId: String, book: BookResponseModel) {
+    val firestore = FirebaseFirestore.getInstance()
 
-        if (userId.isNotEmpty()) {
-            // Create a new document with an auto-generated bookId
-            val newBookRef = firestore.collection(FirestoreReferences.BOOK_COLLECTION).document()
+    if (userId.isNotEmpty()) {
+        // Create a new document with an auto-generated bookId
+        val newBookRef = firestore.collection(FirestoreReferences.BOOK_COLLECTION).document()
 
-            // Generate a new unique bookId for the new book entry
-            val bookId = newBookRef.id
+        // Generate a unique bookId for the new book entry
+        val bookId = newBookRef.id
 
-            // Set the book data (including the generated bookId) for the new book entry
-            val bookData = hashMapOf(
-                FirestoreReferences.BOOKID_FIELD to bookId,
-                FirestoreReferences.COVERS_FIELD to (book.covers ?: listOf<Long>()), // Ensure covers is always saved as a List<Long>
-                FirestoreReferences.TITLE_FIELD to (book.title ?: ""),
-                //FirestoreReferences.AUTHORS_FIELD to (authorName ?: ""), // Use the actual author name
-                FirestoreReferences.AUTHORS_FIELD to (book.authors?.map { it.key } ?: listOf("")), // Save as List<String>
-                FirestoreReferences.PUBLISHERS_FIELD to (book.publishers ?: listOf("")), // Save as List<String>
-                FirestoreReferences.PUBLISH_DATE_FIELD to (book.publish_date ?: ""),
-                FirestoreReferences.ISBN_13_FIELD to (book.isbn_13 ?: listOf("")), // Save as List<String>
-                FirestoreReferences.DESCRIPTION_FIELD to (book.description ?: ""),
-                FirestoreReferences.NUMBER_OF_PAGES_FIELD to (book.number_of_pages ?: 0),
-                FirestoreReferences.SUBJECTS_FIELD to (book.subjects ?: listOf("")) // Save as List<String>
+        // Prepare book data
+        val bookData = hashMapOf(
+            FirestoreReferences.BOOKID_FIELD to bookId,
+            FirestoreReferences.COVERS_FIELD to (book.covers ?: listOf<Long>()),
+            FirestoreReferences.TITLE_FIELD to (book.title ?: ""),
+            FirestoreReferences.AUTHORS_FIELD to (book.authors?.map { it.key } ?: listOf("")),
+            FirestoreReferences.PUBLISHERS_FIELD to (book.publishers ?: listOf("")),
+            FirestoreReferences.PUBLISH_DATE_FIELD to (book.publish_date ?: ""),
+            FirestoreReferences.ISBN_13_FIELD to (book.isbn_13 ?: listOf("")),
+            FirestoreReferences.DESCRIPTION_FIELD to (book.description ?: ""),
+            FirestoreReferences.NUMBER_OF_PAGES_FIELD to (book.number_of_pages ?: 0),
+            FirestoreReferences.SUBJECTS_FIELD to (book.subjects ?: listOf(""))
+        )
 
-            )
+        // Set the book data in Firestore
+        newBookRef.set(bookData)
+            .addOnSuccessListener {
+                Log.d(TAG, "Book added with ID: $bookId")
 
-            Log.e(TAG, "Book data: $bookData")
+                // Prepare library data
+                val libraryEntry = hashMapOf(
+                    FirestoreReferences.LIBRARY_USERID_FIELD to userId,
+                    FirestoreReferences.LIBRARY_BOOKID_FIELD to bookId,
+                    FirestoreReferences.LIBRARY_DATE_ADDED_FIELD to com.google.firebase.firestore.FieldValue.serverTimestamp(),
+                    FirestoreReferences.LIBRARY_IS_LENT_FIELD to false,
+                    FirestoreReferences.LIBRARY_DATE_LENT_FIELD to null,
+                    FirestoreReferences.LIBRARY_LENT_TO_FIELD to null
+                )
 
-            // Set the generated book data in Firestore
-            newBookRef.set(bookData)
-                .addOnSuccessListener {
-                    // Successfully added book details
-                    Log.d(TAG, "Book added with ID: $bookId")
-
-                    // Now, create the library entry linking the user and the book
-                    val libraryEntry = hashMapOf(
-                        "userId" to userId,
-                        "bookId" to bookId,
-                        "dateAdded" to com.google.firebase.firestore.FieldValue.serverTimestamp()
-                    )
-
-                    // Add the library entry to the Libraries collection
-                    firestore.collection(FirestoreReferences.LIBRARY_COLLECTION)
-                        .add(libraryEntry)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d(TAG, "Book added to user's library with entry ID: ${documentReference.id}")
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.e(TAG, "Error adding book to library: ${exception.message}")
-                        }
-                }
-                .addOnFailureListener { exception ->
-                    Log.e(TAG, "Error adding book details: ${exception.message}")
-                }
-        } else {
-            Log.e(TAG, "Invalid user ID.")
-        }
+                // Set the library entry in Firestore
+                firestore.collection(FirestoreReferences.LIBRARY_COLLECTION)
+                    .document(bookId) // Use the same bookId for consistency
+                    .set(libraryEntry)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Book added to user's library with ID: $bookId")
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e(TAG, "Error adding book to library: ${exception.message}")
+                    }
+            }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Error adding book details: ${exception.message}")
+            }
+    } else {
+        Log.e(TAG, "Invalid user ID.")
     }
+}
+
 
     private fun addBookToWishlist(userId: String, book: BookResponseModel) {
         val firestore = FirebaseFirestore.getInstance()
