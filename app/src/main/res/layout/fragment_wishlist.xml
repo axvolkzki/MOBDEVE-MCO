@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="4dp"
-    tools:context="com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.WishlistFragment">
+    tools:context=".fragments.WishlistFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvWishlists"
@@ -15,5 +15,13 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         tools:listitem="@layout/item_wishlist_layout" />
+
+    <ProgressBar
+        android:id="@+id/progressBarWishlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
 
 </FrameLayout>

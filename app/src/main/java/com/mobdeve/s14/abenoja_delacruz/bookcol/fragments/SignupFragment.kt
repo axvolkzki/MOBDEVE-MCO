@@ -1,8 +1,8 @@
 package com.mobdeve.s14.abenoja_delacruz.bookcol.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +14,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.BaseActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.FragmentSignupBinding
+import com.mobdeve.s14.abenoja_delacruz.bookcol.models.UserModel
+import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.FirestoreReferences
+import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.toast
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,15 +33,15 @@ class SignupFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private lateinit var viewBinding : FragmentSignupBinding
+    private var _binding: FragmentSignupBinding? = null
+    private val viewBinding get() = _binding!!
+
     private lateinit var mAuth: FirebaseAuth
-    private lateinit var dbFirestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mAuth = FirebaseAuth.getInstance()
-        dbFirestore = FirebaseFirestore.getInstance()
 
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -51,23 +54,21 @@ class SignupFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        viewBinding = FragmentSignupBinding.inflate(layoutInflater)
+        _binding = FragmentSignupBinding.inflate(inflater, container, false)
         return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        this.viewBinding = FragmentSignupBinding.bind(view)
-
-        this.viewBinding.btnSignUpSubmit.setOnClickListener {
+        // Handle sign-up button click
+        viewBinding.btnSignUpSubmit.setOnClickListener {
             handleSignUp()
         }
 
         // Navigate back to the LoginFragment
-        this.viewBinding.btnSignUpToLogin.setOnClickListener {
+        viewBinding.btnSignUpToLogin.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                // slide in from the bottom
                 .setCustomAnimations(R.anim.slide_in, R.anim.slide_out, R.anim.slide_in, R.anim.slide_out)
                 .replace(R.id.flWrapper, LoginFragment())
                 .addToBackStack(null)
@@ -76,85 +77,124 @@ class SignupFragment : Fragment() {
     }
 
     private fun handleSignUp() {
-        val username = viewBinding.etSignupInputUsername.text.toString()
-        val email = viewBinding.etSignupInputEmail.text.toString()
-        val password = viewBinding.etSignupInputPassword.text.toString()
-        val confirmPassword = viewBinding.etSignupInputConfirmPassword.text.toString()
+        val username = viewBinding.etSignupInputUsername.text.toString().trim()
+        val email = viewBinding.etSignupInputEmail.text.toString().trim()
+        val password = viewBinding.etSignupInputPassword.text.toString().trim()
+        val confirmPassword = viewBinding.etSignupInputConfirmPassword.text.toString().trim()
 
-        // Validate inputs
-        if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
-            Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
-            return
-        }
+        // Validate input, flag error handling but do not close the app
+        if (!validateInput(username, email, password, confirmPassword)) return
 
-        if (password != confirmPassword) {
-            Toast.makeText(requireContext(), "Passwords do not match", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(requireContext(), "Invalid email address", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (password.length < 6) {
-            Toast.makeText(requireContext(), "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Check if username already exists in Firestore
-        dbFirestore.collection("users")
-            .whereEqualTo("username", username)
+        // Check if username already exists
+        FirebaseFirestore.getInstance()
+            .collection(FirestoreReferences.USER_COLLECTION)
+            .whereEqualTo(FirestoreReferences.USERNAME_FIELD, username)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 if (querySnapshot.isEmpty) {
-                    // Username is unique, now create the user in Firebase Authentication
+                    // Proceed with user registration
                     registerNewUser(username, email, password)
                 } else {
-                    // Username already exists
-                    Toast.makeText(requireContext(), "Username is already taken", Toast.LENGTH_SHORT).show()
+                    viewBinding.etSignupInputUsername.error = "Username is already taken"
                 }
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Error checking username: ${exception.message}", Toast.LENGTH_SHORT).show()
+                requireContext().toast("Error checking username: ${exception.message}")
             }
     }
+
+    private fun validateInput(username: String?, email: String?, password: String?, confirmPassword: String?): Boolean {
+        if (username == null || email == null || password == null || confirmPassword == null) {
+            Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return when {
+            username.isBlank() -> {
+                viewBinding.etSignupInputUsername.error = "Username is required"
+                false
+            }
+            email.isBlank() -> {
+                viewBinding.etSignupInputEmail.error = "Email is required"
+                false
+            }
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                viewBinding.etSignupInputEmail.error = "Invalid email address"
+                false
+            }
+            password.isBlank() -> {
+                viewBinding.etSignupInputPassword.error = "Password is required"
+                false
+            }
+            confirmPassword.isBlank() -> {
+                viewBinding.etSignupInputConfirmPassword.error = "Please confirm your password"
+                false
+            }
+            password != confirmPassword -> {
+                viewBinding.etSignupInputConfirmPassword.error = "Passwords do not match"
+                false
+            }
+            password.length < 6 -> {
+                viewBinding.etSignupInputPassword.error = "Password must be at least 6 characters"
+                false
+            }
+            else -> true
+        }
+    }
+
 
     private fun registerNewUser(username: String, email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    val user = mAuth.currentUser
-
-                    Log.d("Signup", "User signed in successfully: ${user?.uid}")
-
-                    // Store additional user data (username) in Firestore
-                    val userData = hashMapOf(
-                        "username" to username,
-                        "email" to email
-                    )
-
-                    dbFirestore.collection("users")
-                        .document(user!!.uid) // Use UID from FirebaseAuth as document ID
-                        .set(userData)
-                        .addOnSuccessListener {
-                            // Successfully registered and stored user data
-                            Toast.makeText(requireContext(), "Sign up successful!", Toast.LENGTH_SHORT).show()
-
-                            val intent = Intent(requireContext(), BaseActivity::class.java).apply {
-                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            }
-                            startActivity(intent)
-                        }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(requireContext(), "Error saving user data: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
+                    val userId = mAuth.currentUser?.uid
+                    if (userId != null) {
+                        val userModel = UserModel(
+                            userId = userId,
+                            username = username,
+                            email = email
+                        )
+                        saveUserToFirestore(userModel)
+                    } else {
+                        requireContext().toast("Error: Unable to get user ID")
+                    }
                 } else {
-                    Toast.makeText(requireContext(), "Sign up failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                    Log.d("Signup", "Sign up failed: ${task.exception?.message}")
+                    requireContext().toast("Sign up failed: ${task.exception?.message}")
                 }
             }
+            .addOnFailureListener { exception ->
+                requireContext().toast("Error: ${exception.message}")
+            }
     }
+
+    private fun saveUserToFirestore(userModel: UserModel) {
+        FirebaseFirestore.getInstance()
+            .collection(FirestoreReferences.USER_COLLECTION)
+            .document(userModel.userId)
+            .set(userModel)
+            .addOnSuccessListener {
+                saveUserIdToPreferences(userModel.userId)
+                requireContext().toast("Sign up successful!")
+
+                // Navigate to main activity
+                val intent = Intent(requireContext(), BaseActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+                startActivity(intent)
+            }
+            .addOnFailureListener { exception ->
+                requireContext().toast("Error saving user data: ${exception.message}")
+            }
+    }
+
+    private fun saveUserIdToPreferences(userId: String) {
+        val sharedPreferences = requireContext().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putString("userId", userId)
+            apply()
+        }
+    }
+
 
     companion object {
         /**

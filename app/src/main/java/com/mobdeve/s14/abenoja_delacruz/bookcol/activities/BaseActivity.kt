@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.R
 import com.mobdeve.s14.abenoja_delacruz.bookcol.databinding.ActivityBaseBinding
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.AddBookFragment
-import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.BooksFragment
+import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.LibraryFragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.FeedFragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.ProfileFragment
 import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.WishlistFragment
@@ -14,24 +14,28 @@ import com.mobdeve.s14.abenoja_delacruz.bookcol.fragments.WishlistFragment
 class BaseActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityBaseBinding
 
+    private val libraryFragment = LibraryFragment()
+    private val feedFragment = FeedFragment()
+    private val addBookFragment = AddBookFragment()
+    private val wishlistFragment = WishlistFragment()
+    private val profileFragment = ProfileFragment()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityBaseBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val booksFragment = BooksFragment()
-        val feedFragment = FeedFragment()
-        val addBookFragment = AddBookFragment()
-        val wishlistFragment = WishlistFragment()
-        val profileFragment = ProfileFragment()
-
-        makeCurrentFragment(booksFragment)
-        viewBinding.txvPageTitle.text = "Books"  // Set initial title
+        // Only create initial fragment if this is the first creation
+        if (savedInstanceState == null) {
+            makeCurrentFragment(libraryFragment)
+            viewBinding.txvPageTitle.text = "Books"
+        }
 
         viewBinding.bnvNavbar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_shelf -> {
-                    makeCurrentFragment(booksFragment)
+                    makeCurrentFragment(libraryFragment)
                     viewBinding.txvPageTitle.text = "Books"
                 }
                 R.id.nav_feed -> {
@@ -57,9 +61,19 @@ class BaseActivity : AppCompatActivity() {
     }
 
     private fun makeCurrentFragment(fragment: Fragment) {
+        // Don't replace if it's the same fragment
+        var currentFragment = supportFragmentManager.findFragmentById(viewBinding.flWrapper.id)
+        if (currentFragment?.javaClass == fragment.javaClass) return
+
+        currentFragment = fragment
         supportFragmentManager.beginTransaction().apply {
             replace(viewBinding.flWrapper.id, fragment)
             commit()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Save current fragment state if needed
     }
 }

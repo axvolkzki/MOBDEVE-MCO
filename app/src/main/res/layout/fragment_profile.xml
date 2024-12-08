@@ -13,7 +13,6 @@
         android:paddingTop="60dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-       >
 
         <!-- Profile Picture -->
         <ImageView
@@ -129,14 +128,14 @@
 
         <!-- Button to Edit Profile -->
         <Button
-            android:id="@+id/editProfileButton"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
+            android:id="@+id/btnProfileLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Profile"
-            android:textColor="@color/lightActive"
-            android:layout_marginTop="24dp" />
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="50dp"
+            android:text="Logout"
+            android:textColor="@color/lightActive" />
 
     </LinearLayout>
 
