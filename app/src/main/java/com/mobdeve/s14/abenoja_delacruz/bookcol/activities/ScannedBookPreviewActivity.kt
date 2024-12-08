@@ -259,6 +259,7 @@ private fun addBookToLibrary(userId: String, book: BookResponseModel) {
                     FirestoreReferences.LIBRARY_USERID_FIELD to userId,
                     FirestoreReferences.LIBRARY_BOOKID_FIELD to bookId,
                     FirestoreReferences.LIBRARY_DATE_ADDED_FIELD to com.google.firebase.firestore.FieldValue.serverTimestamp(),
+                    FirestoreReferences.LIBRARY_IS_FOR_LENDING to false,
                     FirestoreReferences.LIBRARY_IS_LENT_FIELD to false,
                     FirestoreReferences.LIBRARY_DATE_LENT_FIELD to null,
                     FirestoreReferences.LIBRARY_LENT_TO_FIELD to null

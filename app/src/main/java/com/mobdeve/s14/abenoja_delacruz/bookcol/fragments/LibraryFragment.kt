@@ -24,6 +24,8 @@ import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.FirestoreReferences
  * create an instance of this fragment.
  */
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.ListenerRegistration
 import com.mobdeve.s14.abenoja_delacruz.bookcol.models.Author
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,8 +38,7 @@ class LibraryFragment : Fragment() {
     private lateinit var libraryAdapter: LibraryAdapter
     private val booksList = ArrayList<BookResponseModel>()
 
-    // Add flag to track if data has been loaded
-    private var isDataLoaded = false
+    private var libraryListener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,10 +61,8 @@ class LibraryFragment : Fragment() {
         // Setup RecyclerView
         setupRecyclerView()
 
-        // Only load data if it hasn't been loaded yet
-        if (!isDataLoaded) {
-            loadLibraryData()
-        }
+        // Attach real-time listener
+        attachLibraryListener()
     }
 
     private fun setupRecyclerView() {
@@ -72,132 +71,102 @@ class LibraryFragment : Fragment() {
         binding.rcvLibrary.adapter = libraryAdapter
     }
 
-    private fun loadLibraryData() {
-        showLoading()
+    private fun attachLibraryListener() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            showLoading()
 
-        lifecycleScope.launch(Dispatchers.Main) {
-            try {
-                val userId = FirebaseAuth.getInstance().currentUser?.uid
-                if (userId != null) {
-                    // Clear existing data before loading
-                    booksList.clear()
-                    libraryAdapter.notifyDataSetChanged()
+            // Detach any existing listener to prevent duplicates
+            libraryListener?.remove()
 
-                    fetchBooksFromLibrary(userId)
-                    isDataLoaded = true
+            libraryListener = firestore.collection(FirestoreReferences.LIBRARY_COLLECTION)
+                .whereEqualTo(FirestoreReferences.LIBRARY_USERID_FIELD, userId)
+                .addSnapshotListener { snapshot, error ->
+                    if (error != null) {
+                        Log.e(TAG, "Error fetching library data: ${error.message}")
+                        hideLoading()
+                        return@addSnapshotListener
+                    }
+
+                    if (snapshot != null) {
+                        val bookIds = snapshot.documents.mapNotNull { it.getString(FirestoreReferences.LIBRARY_BOOKID_FIELD) }
+
+                        // Fetch book details
+                        fetchBooksDetails(bookIds)
+                    } else {
+                        hideLoading()
+                    }
                 }
-            } catch (e: Exception) {
-                Log.e(TAG, "Error loading library data: ", e)
-                Toast.makeText(context, "Error loading books", Toast.LENGTH_SHORT).show()
-            } finally {
+        } else {
+            Log.e(TAG, "User ID is null, cannot fetch library.")
+        }
+    }
+
+    private fun fetchBooksDetails(bookIds: List<String>) {
+        if (bookIds.isEmpty()) {
+            booksList.clear() // Clear the list when there are no books
+            libraryAdapter.notifyDataSetChanged()
+            hideLoading()
+            return
+        }
+
+        // Fetch details for all books in a batch
+        firestore.collection(FirestoreReferences.BOOK_COLLECTION)
+            .whereIn(FieldPath.documentId(), bookIds)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                booksList.clear() // Clear existing books before adding new ones
+
+                for (document in querySnapshot.documents) {
+                    val data = document.data
+                    if (data != null) {
+                        val book = BookResponseModel(
+                            key = data["key"] as? String,
+                            title = data["title"] as? String,
+                            authors = (data["authors"] as? List<*>)?.mapNotNull { Author(it.toString()) },
+                            covers = (data["covers"] as? List<*>)?.mapNotNull { it.toString().toLongOrNull() },
+                            publish_date = data["publish_date"] as? String,
+                            number_of_pages = (data["number_of_pages"] as? Number)?.toInt(),
+                            publishers = (data["publishers"] as? List<*>)?.mapNotNull { it.toString() },
+                            isbn_13 = (data["isbn_13"] as? List<*>)?.mapNotNull { it.toString() },
+                            description = data["description"] as? String,
+                            subjects = (data["subjects"] as? List<*>)?.mapNotNull { it.toString() }
+                        )
+                        booksList.add(book) // Add all books directly to booksList
+                    }
+                }
+
+                libraryAdapter.notifyDataSetChanged()
+                Log.d(TAG, "Books successfully fetched: ${booksList.size}")
                 hideLoading()
             }
-        }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Error fetching book details: ", exception)
+                hideLoading()
+            }
+    }
+
+
+
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     private fun hideLoading() {
         binding.progressBar.visibility = View.GONE
     }
 
-    private fun showLoading() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
 
-    fun refreshData() {
-        isDataLoaded = false
-        loadLibraryData()
+        // Detach listener to prevent memory leaks
+        libraryListener?.remove()
     }
 
     companion object {
         private const val TAG = "LibraryFragment"
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    // Fetch books data from Firestore
-    private fun fetchBooksFromLibrary(userId: String) {
-        firestore.collection(FirestoreReferences.LIBRARY_COLLECTION)
-            .whereEqualTo(FirestoreReferences.LIBRARY_USERID_FIELD, userId)  // Filter by userId
-            .get()
-            .addOnSuccessListener { documents ->
-                val bookIds = mutableListOf<String>()
-                for (document in documents) {
-                    val bookId = document.getString(FirestoreReferences.LIBRARY_BOOKID_FIELD)
-                    bookId?.let {
-                        bookIds.add(it)
-                    }
-                }
-                // After collecting all the book IDs, fetch the books
-                fetchBooksDetails(bookIds)
-            }
-            .addOnFailureListener { exception ->
-                Log.e(TAG, "Error getting books from Library collection: ", exception)
-            }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun fetchBooksDetails(bookIds: List<String>) {
-        for (bookId in bookIds) {
-            firestore.collection(FirestoreReferences.BOOK_COLLECTION)
-                .document(bookId)
-                .get()
-                .addOnSuccessListener { document ->
-                    val data = document.data
-                    if (data != null) {
-                        // Handle each field individually
-                        val key = data["key"] as? String
-                        val title = data["title"] as? String
-
-                        // Handle authors
-                        val authorsRaw = data["authors"] as? List<*>
-                        val authors = authorsRaw?.map { Author(it.toString()) } ?: listOf()
-
-                        // Handle covers
-                        val coversRaw = data["covers"] as? List<*>
-                        val covers = coversRaw?.mapNotNull { it.toString().toLongOrNull() }
-
-                        // Handle other fields
-                        val publishDate = data["publish_date"] as? String
-                        val numberOfPages = (data["number_of_pages"] as? Number)?.toInt()
-
-                        val publishersRaw = data["publishers"] as? List<*>
-                        val publishers = publishersRaw?.mapNotNull { it.toString() }
-
-                        val isbn13Raw = data["isbn_13"] as? List<*>
-                        val isbn13 = isbn13Raw?.mapNotNull { it.toString() }
-
-                        val description = data["description"] as? String
-
-                        val subjectsRaw = data["subjects"] as? List<*>
-                        val subjects = subjectsRaw?.mapNotNull { it.toString() }
-
-                        // Create BookResponseModel manually
-                        val book = BookResponseModel(
-                            key = key,
-                            title = title,
-                            authors = authors,
-                            covers = covers,
-                            publish_date = publishDate,
-                            number_of_pages = numberOfPages,
-                            publishers = publishers,
-                            isbn_13 = isbn13,
-                            description = description,
-                            subjects = subjects
-                        )
-
-                        booksList.add(book)
-                        libraryAdapter.notifyDataSetChanged()
-
-                        Log.d(TAG, "Successfully added book: ${book.title}")
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.e(TAG, "Error getting book details: ", exception)
-                }
-        }
-    }
 }
+
 
