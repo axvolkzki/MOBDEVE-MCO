@@ -190,7 +190,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val bookResponse = response.body()
                     if (bookResponse != null) {
-                        Log.d(TAG, "Book fetched successfully: ${bookResponse.title}")
+                        Log.d(TAG, "[Fetch by OLID] Book fetched successfully: ${bookResponse.title}")
 
 
                         // Fetch author details using the first author key
@@ -326,6 +326,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+//        cameraExecutor.execute { bindCameraPreview() }
         isPreviewActivityStarted = false // Reset flag when returning to this activity
 
         if (::processCameraProvider.isInitialized) {

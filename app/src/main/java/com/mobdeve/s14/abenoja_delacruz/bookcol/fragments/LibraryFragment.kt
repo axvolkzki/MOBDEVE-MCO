@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s14.abenoja_delacruz.bookcol.adapters.LibraryAdapter
@@ -23,6 +25,8 @@ import com.mobdeve.s14.abenoja_delacruz.bookcol.utils.FirestoreReferences
  */
 import com.google.firebase.auth.FirebaseAuth
 import com.mobdeve.s14.abenoja_delacruz.bookcol.models.Author
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LibraryFragment : Fragment() {
     private var _binding: FragmentLibraryBinding? = null
@@ -31,6 +35,16 @@ class LibraryFragment : Fragment() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var libraryAdapter: LibraryAdapter
     private val booksList = ArrayList<BookResponseModel>()
+
+    // Add flag to track if data has been loaded
+    private var isDataLoaded = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Initialize Firestore
+        firestore = FirebaseFirestore.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,25 +57,59 @@ class LibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize Firestore
-        firestore = FirebaseFirestore.getInstance()
+        // Setup RecyclerView
+        setupRecyclerView()
 
-        // Set up RecyclerView
+        // Only load data if it hasn't been loaded yet
+        if (!isDataLoaded) {
+            loadLibraryData()
+        }
+    }
+
+    private fun setupRecyclerView() {
         binding.rcvLibrary.layoutManager = GridLayoutManager(requireContext(), 2)
-
-        // Initialize the adapter and set it to the RecyclerView
         libraryAdapter = LibraryAdapter(booksList)
         binding.rcvLibrary.adapter = libraryAdapter
+    }
 
-        // Fetch the current user's ID from Firebase Authentication
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        if (userId != null) {
-            Log.d(TAG, "User ID: $userId")
-            // Fetch books data from Firestore
-            fetchBooksFromLibrary(userId)
-        } else {
-            Log.e(TAG, "User is not authenticated")
+    private fun loadLibraryData() {
+        showLoading()
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            try {
+                val userId = FirebaseAuth.getInstance().currentUser?.uid
+                if (userId != null) {
+                    // Clear existing data before loading
+                    booksList.clear()
+                    libraryAdapter.notifyDataSetChanged()
+
+                    fetchBooksFromLibrary(userId)
+                    isDataLoaded = true
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading library data: ", e)
+                Toast.makeText(context, "Error loading books", Toast.LENGTH_SHORT).show()
+            } finally {
+                hideLoading()
+            }
         }
+    }
+
+    private fun hideLoading() {
+        binding.progressBar.visibility = View.GONE
+    }
+
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    fun refreshData() {
+        isDataLoaded = false
+        loadLibraryData()
+    }
+
+    companion object {
+        private const val TAG = "LibraryFragment"
     }
 
     override fun onDestroyView() {
