@@ -393,14 +393,14 @@
         android:layout_gravity="bottom">
 
         <Button
-            android:id="@+id/btnPrevAddToWishlist"
+            android:id="@+id/btnLibDeetsLendBook"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="1dp"
-            android:text="Add to Wishlist"
-            android:textColor="@android:color/white"
-            android:background="@color/lightPrimary" />
+            android:layout_weight="1"
+            android:background="@color/lightPrimary"
+            android:text="Lend Book"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
