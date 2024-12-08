@@ -1,5 +1,6 @@
 package com.mobdeve.s14.abenoja_delacruz.bookcol.adapters
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -23,13 +24,18 @@ class LibraryAdapter(private val books: ArrayList<BookResponseModel>) : Recycler
     }
 
     override fun onBindViewHolder(holder: LibraryViewHolder, position: Int) {
+        // Bind the book data to the view holder
         holder.bind(books[position])
 
-        // When the user clicks on a book, the app will navigate to the BookDetailsActivity
+        // Set an OnClickListener on the itemView
         holder.itemView.setOnClickListener {
+            // Get the book title from the current position
+            val title = books[position].title // Assuming 'title' is the property for book title
+
+            // Create an intent to start BookDetailsActivity
             val intent = Intent(holder.itemView.context, BookDetailsActivity::class.java)
-            intent.putExtra("KEY_TITLE", books[position].title)
-            holder.itemView.context.startActivity(intent)
+            intent.putExtra("KEY_TITLE", title) // Pass the book title
+            holder.itemView.context.startActivity(intent) // Start the activity
         }
     }
 }
