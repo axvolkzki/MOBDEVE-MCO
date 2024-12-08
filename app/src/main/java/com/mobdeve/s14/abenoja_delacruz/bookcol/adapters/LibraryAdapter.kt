@@ -1,9 +1,12 @@
+
 package com.mobdeve.s14.abenoja_delacruz.bookcol.adapters
 
+import android.app.AlertDialog
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s14.abenoja_delacruz.bookcol.activities.LibraryBookDetailsActivity
 import com.mobdeve.s14.abenoja_delacruz.bookcol.models.BookResponseModel
@@ -22,31 +25,18 @@ class LibraryAdapter(private val books: ArrayList<BookResponseModel>) : Recycler
     }
 
     override fun onBindViewHolder(holder: LibraryViewHolder, position: Int) {
-        val book = books[position] // Get the book at the current position
-        holder.bind(book)
+        // Bind the book data to the view holder
+        holder.bind(books[position])
 
+        // Set an OnClickListener on the itemView
         holder.itemView.setOnClickListener {
+            // Get the book title from the current position
+            val title = books[position].title // Assuming 'title' is the property for book title
+
+            // Create an intent to start BookDetailsActivity
             val intent = Intent(holder.itemView.context, LibraryBookDetailsActivity::class.java)
-
-            Log.e("LibraryAdapter", "Book: $book")
-
-            // Add book details to the intent
-            intent.putExtra("KEY_TITLE", book.title)
-            intent.putExtra("KEY_AUTHOR", book.authors?.joinToString(", ") { it.key ?: "Unknown Author" })
-            intent.putExtra("KEY_PUBLISHER", book.publishers?.joinToString(", ") ?: "Unknown Publisher")
-
-            // Handle empty or null covers
-            val coverId = if (!book.covers.isNullOrEmpty()) book.covers[0] else null
-            coverId?.let { intent.putExtra("KEY_COVER", it) }
-
-            intent.putExtra("KEY_DATE_PUBLISHED", book.publish_date ?: "Unknown Date")
-            intent.putExtra("KEY_ISBN", book.isbn_13?.joinToString(", ") ?: "Unknown ISBN")
-            intent.putExtra("KEY_SUMMARY", book.description ?: "No summary available")
-            intent.putExtra("KEY_PAGE_NUMBER", book.number_of_pages)
-            intent.putExtra("KEY_SUBJECTS", book.subjects?.joinToString(", ") ?: "No subjects available")
-
-            // Start the details activity
-            holder.itemView.context.startActivity(intent)
+            intent.putExtra("KEY_TITLE", title) // Pass the book title
+            holder.itemView.context.startActivity(intent) // Start the activity
         }
     }
 }
